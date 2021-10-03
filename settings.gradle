@@ -1,0 +1,3 @@
+rootProject.name = 'PraiseSystem'
+include('backend')
+
