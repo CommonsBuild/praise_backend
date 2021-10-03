@@ -10,5 +10,4 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableConfigurationProperties
 public class AppConfiguration {
-
 }

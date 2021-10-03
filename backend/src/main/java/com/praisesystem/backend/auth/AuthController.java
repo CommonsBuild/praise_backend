@@ -3,6 +3,7 @@ package com.praisesystem.backend.auth;
 import com.praisesystem.backend.auth.dto.AuthenticationRequestDto;
 import com.praisesystem.backend.auth.dto.AuthenticationResponseDto;
 import com.praisesystem.backend.auth.dto.GetNonceResponseDto;
+import com.praisesystem.backend.common.validators.EthereumAddress;
 import com.praisesystem.backend.security.jwt.JwtTokenProvider;
 import com.praisesystem.backend.users.model.UserEntity;
 import com.praisesystem.backend.users.services.UserService;
@@ -18,6 +19,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @AllArgsConstructor
@@ -30,7 +33,7 @@ public class AuthController {
     UserService userService;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public AuthenticationResponseDto auth(@RequestBody AuthenticationRequestDto request) {
+    public AuthenticationResponseDto auth(@Valid @RequestBody AuthenticationRequestDto request) {
         try {
             String publicKey = request.getPublicKey();
             String message = request.getMessage();
@@ -57,7 +60,7 @@ public class AuthController {
     }
 
     @GetMapping(value = "/nonce", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GetNonceResponseDto nonce(@RequestParam("publicKey") String publicKey) {
+    public GetNonceResponseDto nonce(@Valid @EthereumAddress @RequestParam("publicKey") String publicKey) {
         UserEntity user = userService.findByPublicKey(publicKey);
         return new GetNonceResponseDto(user.getPublicKey(), user.getNonce());
     }

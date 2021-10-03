@@ -53,8 +53,8 @@ public class RestExceptionHandler {
     protected ExceptionResponse handle(MethodArgumentNotValidException e, HttpServletRequest request) {
         log.error("Exception when calling URI {}. {}", request.getRequestURI(), e.getMessage());
         List<String> errorList = new ArrayList<>();
-        e.getFieldErrors().forEach(error -> errorList.add(error.getDefaultMessage()));
-        e.getGlobalErrors().forEach(error -> errorList.add(error.getDefaultMessage()));
+        e.getFieldErrors().forEach(error -> errorList.add(error.getField() + " " + error.getDefaultMessage()));
+        e.getGlobalErrors().forEach(error -> errorList.add(error.getObjectName() + " " + error.getDefaultMessage()));
         return new ExceptionResponse(HttpStatus.BAD_REQUEST.value(), request.getRequestURI(), "Validation Error", errorList);
     }
 }
