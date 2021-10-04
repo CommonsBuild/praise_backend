@@ -1,0 +1,64 @@
+package com.praisesystem.backend.configuration.configs;
+
+import com.praisesystem.backend.security.NoPasswordEncoder;
+import com.praisesystem.backend.security.jwt.JwtConfigurer;
+import com.praisesystem.backend.security.jwt.JwtTokenProvider;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    JwtTokenProvider jwtTokenProvider;
+
+    static String ADMIN_ENDPOINT = "/api/admin/**";
+    static String LOGIN_ENDPOINT = "/api/auth/**";
+//    static String QUANTIFICATION_ENDPOINT = "/api/quantification/**";
+
+
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new NoPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.
+                // disable basic http security
+                httpBasic().disable()
+                // disable csrf
+                .csrf().disable()
+                // session creation policy STATELESS
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                // allow all requests
+                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                // allow for only admin
+                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                // allow for only quanitifers
+//                .antMatchers(QUANTIFICATION_ENDPOINT).hasRole("QUANTIFIER")
+                // now it doesn't works - 403. will dig it tomorrow
+                .antMatchers("/swagger**").permitAll() // TODO: 02.10.2021 disable
+                .anyRequest().authenticated()
+                .and()
+                .apply(new JwtConfigurer(jwtTokenProvider));
+    }
+}

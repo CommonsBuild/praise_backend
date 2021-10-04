@@ -1,0 +1,38 @@
+# --------------------------------------- COMMON PROPERTIES ---------------------------------------
+server:
+  port: 8080
+
+# --------------------------------------- SPRING PROPERTIES ---------------------------------------
+spring:
+  #  profiles:
+  #    active: @activatedProperties@
+  # ------------------------------------- DATASOURCE PROPERTIES -------------------------------------
+  config:
+    import:
+      - classpath:db/local/postgres_db.properties
+# ------------------------------------ RATE-LIMIT PROPERTIES --------------------------------------
+praise-system:
+  admin-public-key: "0xc19AbEBaa5BeEE7eE2b20ee990eC63f02B0A0D0c"
+# ---------------------------------------- JWT PROPERTIES -----------------------------------------
+jwt:
+  token:
+    secret: somesecret
+    expirationTimeMS: 86400000
+# ------------------------------------ RATE-LIMIT PROPERTIES --------------------------------------
+bucket4j:
+  enabled: true
+  filters:
+    - cache-name: buckets
+      url: .*
+      rate-limits:
+        - bandwidths:
+            - capacity: 5
+              time: 1
+              unit: minutes
+              fixed-refill-interval: 1
+              fixed-refill-interval-unit: minutes
+
+# -------------------------------------- OPENFEIGN PROPERTIES -------------------------------------
+
+
+# ------------------------------------- SCHEDULERS PROPERTIES -------------------------------------
