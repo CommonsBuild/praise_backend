@@ -38,6 +38,7 @@ public class AuthController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public AuthenticationResponseDto auth(@Valid @RequestBody AuthenticationRequestDto request) {
+        log.info("[AUTH CONTROLLER] Authentication request for Ethereum address ({})", request.getPublicKey());
         try {
             String publicKey = request.getPublicKey();
             String message = request.getMessage();
@@ -57,6 +58,7 @@ public class AuthController {
             String token = jwtTokenProvider.generateToken(publicKey, user.getRoles());
             userService.updateNonceByPublicKey(user.getPublicKey());
 
+            log.info("[AUTH CONTROLLER] Successful authentication for Ethereum address ({})", request.getPublicKey());
             return new AuthenticationResponseDto(token, publicKey);
         } catch (AuthenticationException | AccessDeniedException e) {
             throw new BadCredentialsException("Bad signature"); // TODO: 02.10.2021 Create custom exception
@@ -65,6 +67,7 @@ public class AuthController {
 
     @GetMapping(value = "/nonce", produces = MediaType.APPLICATION_JSON_VALUE)
     public GetNonceResponseDto nonce(@Valid @EthereumAddress @RequestParam("publicKey") String publicKey) {
+        log.info("[AUTH CONTROLLER] Nonce request for Ethereum address ({})", publicKey);
         UserDto user = userService.findByPublicKey(publicKey);
         return new GetNonceResponseDto(user.getPublicKey(), user.getNonce());
     }

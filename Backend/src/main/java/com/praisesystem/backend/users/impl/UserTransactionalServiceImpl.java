@@ -66,13 +66,13 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
 
     @Override
     public UserDto findByPublicKey(String publicKey) {
-        UserEntity user = userRepository.findByPublicKey(publicKey).orElse(register(publicKey));
+        UserEntity user = userRepository.findByPublicKey(publicKey).orElseGet(() -> register(publicKey));
         return userMapper.toUserDto(user);
     }
 
     @Override
     public void updateNonceByPublicKey(String publicKey) {
-        UserEntity user = userRepository.findByPublicKey(publicKey).orElse(register(publicKey));
+        UserEntity user = userRepository.findByPublicKey(publicKey).orElseGet(() -> register(publicKey));
         user.updateNonce();
         userRepository.save(user);
     }
