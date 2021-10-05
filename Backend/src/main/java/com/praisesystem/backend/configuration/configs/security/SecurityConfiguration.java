@@ -1,8 +1,8 @@
-package com.praisesystem.backend.configuration.configs;
+package com.praisesystem.backend.configuration.configs.security;
 
-import com.praisesystem.backend.security.NoPasswordEncoder;
-import com.praisesystem.backend.security.jwt.JwtConfigurer;
-import com.praisesystem.backend.security.jwt.JwtTokenProvider;
+import com.praisesystem.backend.configuration.configs.security.jwt.JwtConfigurer;
+import com.praisesystem.backend.configuration.configs.security.jwt.JwtTokenProvider;
+import com.praisesystem.backend.configuration.properties.ApplicationProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -32,6 +32,7 @@ import java.util.List;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     Environment environment;
+    ApplicationProperties properties;
     JwtTokenProvider jwtTokenProvider;
 
     static String ADMIN_ENDPOINT = "/api/admin/**";
@@ -97,7 +98,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+        configuration.setAllowedOrigins(Collections.singletonList(properties.getFrontendUrl()));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

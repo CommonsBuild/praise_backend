@@ -6,7 +6,7 @@ import com.praisesystem.backend.users.model.UserEntity;
 import java.util.List;
 
 public interface UserTransactionalService {
-    UserEntity createAdmin();
+    void createAdmins();
 
     UserEntity register(String user);
 

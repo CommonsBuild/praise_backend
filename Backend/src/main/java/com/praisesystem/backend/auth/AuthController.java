@@ -4,7 +4,7 @@ import com.praisesystem.backend.auth.dto.AuthenticationRequestDto;
 import com.praisesystem.backend.auth.dto.AuthenticationResponseDto;
 import com.praisesystem.backend.auth.dto.GetNonceResponseDto;
 import com.praisesystem.backend.common.validators.EthereumAddress;
-import com.praisesystem.backend.security.jwt.JwtTokenProvider;
+import com.praisesystem.backend.configuration.configs.security.jwt.JwtTokenProvider;
 import com.praisesystem.backend.users.model.UserEntity;
 import com.praisesystem.backend.users.services.UserService;
 import lombok.AccessLevel;

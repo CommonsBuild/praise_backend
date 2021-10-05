@@ -1,6 +1,6 @@
-package com.praisesystem.backend.security.jwt;
+package com.praisesystem.backend.configuration.configs.security.jwt;
 
-import com.praisesystem.backend.roles.model.RoleEntity;
+import com.praisesystem.backend.users.roles.model.RoleEntity;
 import io.jsonwebtoken.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

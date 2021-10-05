@@ -1,4 +1,4 @@
-package com.praisesystem.backend.security.jwt;
+package com.praisesystem.backend.configuration.configs.security.jwt;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

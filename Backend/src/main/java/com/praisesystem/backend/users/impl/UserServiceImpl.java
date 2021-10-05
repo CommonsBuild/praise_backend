@@ -47,6 +47,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createAdmin() {
-        userTransactionalService.createAdmin();
+        userTransactionalService.createAdmins();
     }
 }

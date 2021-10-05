@@ -1,8 +1,8 @@
 package com.praisesystem.backend.configuration.configs;
 
-import com.praisesystem.backend.roles.RoleService;
-import com.praisesystem.backend.roles.enums.RoleCode;
-import com.praisesystem.backend.roles.model.RoleEntity;
+import com.praisesystem.backend.users.roles.RoleService;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
+import com.praisesystem.backend.users.roles.model.RoleEntity;
 import com.praisesystem.backend.users.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;

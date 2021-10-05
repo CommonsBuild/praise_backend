@@ -10,9 +10,13 @@ spring:
   config:
     import:
       - classpath:db/local/postgres_db.properties
-# ------------------------------------ RATE-LIMIT PROPERTIES --------------------------------------
+# ------------------------------------ PRAISESYSTEM PROPERTIES -------------------------------------
 praise-system:
-  admin-public-key: "0xc19AbEBaa5BeEE7eE2b20ee990eC63f02B0A0D0c"
+  admin-addresses:
+    - "0xc19AbEBaa5BeEE7eE2b20ee990eC63f02B0A0D0c"
+    - "0xc19AbEBaa5BeEE7eE2b20ee990eC63f02B0A0D11"
+    - "0xc19AbEBaa5BeEE7eE2b20ee990eC63f02B0A0D22"
+  frontend-url: "http://localhost:3000"
 # ---------------------------------------- JWT PROPERTIES -----------------------------------------
 jwt:
   token:

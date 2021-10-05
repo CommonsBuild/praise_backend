@@ -1,9 +1,9 @@
-package com.praisesystem.backend.roles.impl;
+package com.praisesystem.backend.users.roles.impl;
 
-import com.praisesystem.backend.roles.RoleRepository;
-import com.praisesystem.backend.roles.RoleService;
-import com.praisesystem.backend.roles.enums.RoleCode;
-import com.praisesystem.backend.roles.model.RoleEntity;
+import com.praisesystem.backend.users.roles.RoleRepository;
+import com.praisesystem.backend.users.roles.RoleService;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
+import com.praisesystem.backend.users.roles.model.RoleEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;

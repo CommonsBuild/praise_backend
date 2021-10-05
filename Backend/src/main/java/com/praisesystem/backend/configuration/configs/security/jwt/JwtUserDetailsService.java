@@ -1,4 +1,4 @@
-package com.praisesystem.backend.security.jwt;
+package com.praisesystem.backend.configuration.configs.security.jwt;
 
 import com.praisesystem.backend.users.services.UserService;
 import com.praisesystem.backend.users.model.UserEntity;

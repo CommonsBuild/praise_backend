@@ -1,7 +1,7 @@
-package com.praisesystem.backend.roles;
+package com.praisesystem.backend.users.roles;
 
-import com.praisesystem.backend.roles.enums.RoleCode;
-import com.praisesystem.backend.roles.model.RoleEntity;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
+import com.praisesystem.backend.users.roles.model.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {

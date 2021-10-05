@@ -1,4 +1,4 @@
-package com.praisesystem.backend.roles.mapper.support;
+package com.praisesystem.backend.users.roles.mapper.support;
 
 import org.mapstruct.Qualifier;
 
