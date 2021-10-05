@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,8 +55,22 @@ public class RestExceptionHandler {
     protected ExceptionResponse handle(MethodArgumentNotValidException e, HttpServletRequest request) {
         log.error("Exception when calling URI {}. {}", request.getRequestURI(), e.getMessage());
         List<String> errorList = new ArrayList<>();
-        e.getFieldErrors().forEach(error -> errorList.add(error.getField() + " " + error.getDefaultMessage()));
-        e.getGlobalErrors().forEach(error -> errorList.add(error.getObjectName() + " " + error.getDefaultMessage()));
+        e.getFieldErrors().forEach(error -> errorList.add(error.getField() + ":" + error.getDefaultMessage()));
+        e.getGlobalErrors().forEach(error -> errorList.add(error.getObjectName() + ":" + error.getDefaultMessage()));
+        return new ExceptionResponse(HttpStatus.BAD_REQUEST.value(), request.getRequestURI(), "Validation Error", errorList);
+    }
+
+    @ExceptionHandler(value = {ConstraintViolationException.class})
+    protected ExceptionResponse handle(ConstraintViolationException e, HttpServletRequest request) {
+        log.error("Exception when calling URI {}. {}", request.getRequestURI(), e.getMessage());
+        List<String> errorList = new ArrayList<>();
+        e.getConstraintViolations().forEach(error -> {
+            String field = null;
+            for (Path.Node node : error.getPropertyPath()) {
+                field = node.getName();
+            }
+            errorList.add(field + ":" + error.getMessage());
+        });
         return new ExceptionResponse(HttpStatus.BAD_REQUEST.value(), request.getRequestURI(), "Validation Error", errorList);
     }
 }
