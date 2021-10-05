@@ -6,15 +6,15 @@ import com.praisesystem.backend.users.model.UserEntity;
 import java.util.List;
 
 public interface UserTransactionalService {
-    UserEntity createAdmin();
+    void createAdmins();
 
     UserEntity register(String user);
 
     List<UserDto> findAll();
 
-    UserEntity findById(Long id);
+    UserDto findById(Long id);
 
-    UserEntity findByPublicKey(String publicKey);
+    UserDto findByPublicKey(String publicKey);
 
-    String updateNonceByPublicKey(String publicKey);
+    void updateNonceByPublicKey(String publicKey);
 }

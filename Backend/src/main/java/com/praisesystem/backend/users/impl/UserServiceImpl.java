@@ -1,7 +1,6 @@
 package com.praisesystem.backend.users.impl;
 
 import com.praisesystem.backend.users.dto.UserDto;
-import com.praisesystem.backend.users.model.UserEntity;
 import com.praisesystem.backend.users.services.UserService;
 import com.praisesystem.backend.users.services.UserTransactionalService;
 import lombok.AccessLevel;
@@ -21,22 +20,17 @@ public class UserServiceImpl implements UserService {
     UserTransactionalService userTransactionalService;
 
     @Override
-    public UserEntity register(String publicKey) {
-        return userTransactionalService.register(publicKey);
-    }
-
-    @Override
     public List<UserDto> findAll() {
         return userTransactionalService.findAll();
     }
 
     @Override
-    public UserEntity findById(Long id) {
+    public UserDto findById(Long id) {
         return userTransactionalService.findById(id);
     }
 
     @Override
-    public UserEntity findByPublicKey(String publicKey) {
+    public UserDto findByPublicKey(String publicKey) {
         return userTransactionalService.findByPublicKey(publicKey);
     }
 
@@ -47,6 +41,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createAdmin() {
-        userTransactionalService.createAdmin();
+        userTransactionalService.createAdmins();
     }
 }

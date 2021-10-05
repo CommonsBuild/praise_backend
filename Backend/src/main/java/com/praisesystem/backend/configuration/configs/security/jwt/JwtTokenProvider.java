@@ -1,6 +1,5 @@
-package com.praisesystem.backend.security.jwt;
+package com.praisesystem.backend.configuration.configs.security.jwt;
 
-import com.praisesystem.backend.roles.model.RoleEntity;
 import io.jsonwebtoken.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -27,9 +24,9 @@ public class JwtTokenProvider {
     JwtTokenProperties properties;
     UserDetailsService userDetailsService;
 
-    public String generateToken(String publicKey, Set<RoleEntity> roles) {
+    public String generateToken(String publicKey, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(publicKey);
-        claims.put("roles", getRoleCodesNames(roles));
+        claims.put("roles", roles);
 
         log.info(properties.toString());
         Date now = new Date();
@@ -59,10 +56,6 @@ public class JwtTokenProvider {
             return bearerToken.substring(7);
         }
         return null;
-    }
-
-    private List<String> getRoleCodesNames(Set<RoleEntity> roles) {
-        return roles.stream().map(role -> role.getCode().name()).collect(Collectors.toList());
     }
 
     public boolean validateToken(String token) {

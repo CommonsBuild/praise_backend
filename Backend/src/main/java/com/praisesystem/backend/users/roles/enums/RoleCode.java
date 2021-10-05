@@ -1,4 +1,4 @@
-package com.praisesystem.backend.roles.enums;
+package com.praisesystem.backend.users.roles.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

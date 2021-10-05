@@ -1,8 +1,8 @@
 package com.praisesystem.backend.users.mapper;
 
-import com.praisesystem.backend.roles.mapper.RoleMapper;
-import com.praisesystem.backend.roles.mapper.support.RolesToStringList;
-import com.praisesystem.backend.roles.model.RoleEntity;
+import com.praisesystem.backend.users.roles.mapper.RoleMapper;
+import com.praisesystem.backend.users.roles.mapper.support.RolesToStringList;
+import com.praisesystem.backend.users.roles.model.RoleEntity;
 import com.praisesystem.backend.users.dto.UserDto;
 import com.praisesystem.backend.users.model.UserEntity;
 import org.mapstruct.*;
@@ -19,6 +19,8 @@ public interface UserMapper {
 
     @Mapping(target = "roles", source = "roles", qualifiedBy = RolesToStringList.class)
     UserDto toUserDto(UserEntity entity);
+
+    List<UserDto> toUserDtos(List<UserEntity> userEntities);
 
     default UserEntity toNewUserFromPublicKeyAndRoles(String publicKey, List<RoleEntity> roles) {
         if (publicKey == null) {

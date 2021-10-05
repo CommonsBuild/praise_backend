@@ -1,8 +1,8 @@
-package com.praisesystem.backend.roles.model;
+package com.praisesystem.backend.users.roles.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.praisesystem.backend.common.persistence.BaseEntity;
-import com.praisesystem.backend.roles.enums.RoleCode;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
 import com.praisesystem.backend.users.model.UserEntity;
 import lombok.AccessLevel;
 import lombok.Getter;

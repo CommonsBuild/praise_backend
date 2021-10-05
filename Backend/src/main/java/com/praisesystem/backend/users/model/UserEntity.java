@@ -2,7 +2,7 @@ package com.praisesystem.backend.users.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.praisesystem.backend.common.persistence.BaseEntity;
-import com.praisesystem.backend.roles.model.RoleEntity;
+import com.praisesystem.backend.users.roles.model.RoleEntity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -2,13 +2,13 @@ package com.praisesystem.backend.users.impl;
 
 import com.praisesystem.backend.common.exceptions.exceptiontypes.NotFoundObjectException;
 import com.praisesystem.backend.configuration.properties.ApplicationProperties;
-import com.praisesystem.backend.roles.RoleService;
-import com.praisesystem.backend.roles.enums.RoleCode;
-import com.praisesystem.backend.roles.model.RoleEntity;
+import com.praisesystem.backend.users.UserRepository;
 import com.praisesystem.backend.users.dto.UserDto;
 import com.praisesystem.backend.users.mapper.UserMapper;
-import com.praisesystem.backend.users.UserRepository;
 import com.praisesystem.backend.users.model.UserEntity;
+import com.praisesystem.backend.users.roles.RoleService;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
+import com.praisesystem.backend.users.roles.model.RoleEntity;
 import com.praisesystem.backend.users.services.UserTransactionalService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,13 +31,24 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
     UserMapper userMapper;
 
     @Override
-    public UserEntity createAdmin() {
-        return userRepository.findByPublicKey(properties.getAdminPublicKey()).orElseGet(() -> {
-            List<RoleEntity> roles = roleService.findAll();
-            UserEntity newAdminUser = userMapper.toNewUserFromPublicKeyAndRoles(properties.getAdminPublicKey(), roles);
-            return userRepository.save(newAdminUser);
-        });
+    public void createAdmins() {
+        List<RoleEntity> roles = roleService.findAll();
+        List<String> adminAddresses = properties.getAdminAddresses();
 
+        List<String> existingAdmins = userRepository.findByPublicKeyIn(adminAddresses)
+                .stream()
+                .map(UserEntity::getPublicKey)
+                .collect(Collectors.toList());
+
+        List<UserEntity> newAdmins = adminAddresses.stream()
+                .distinct()
+                .filter(address -> !existingAdmins.contains(address))
+                .map(address -> userMapper.toNewUserFromPublicKeyAndRoles(address, roles))
+                .collect(Collectors.toList());
+
+        userRepository.saveAll(newAdmins)
+                .forEach(user -> log.info("[APPLICATION RUNNER] Admin with address ({}) successfully created.", user.getPublicKey()));
+        ;
     }
 
     @Override
@@ -49,22 +59,22 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
     }
 
     @Override
-    public UserEntity findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundObjectException("User not found"));
+    public UserDto findById(Long id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new NotFoundObjectException("User not found"));
+        return userMapper.toUserDto(user);
     }
 
     @Override
-    public UserEntity findByPublicKey(String publicKey) {
-        Optional<UserEntity> optionalUser =  userRepository.findByPublicKey(publicKey);
-        return optionalUser.orElseGet(() -> register(publicKey));
+    public UserDto findByPublicKey(String publicKey) {
+        UserEntity user = userRepository.findByPublicKey(publicKey).orElseGet(() -> register(publicKey));
+        return userMapper.toUserDto(user);
     }
 
     @Override
-    public String updateNonceByPublicKey(String publicKey) {
-        UserEntity user = findByPublicKey(publicKey);
-
+    public void updateNonceByPublicKey(String publicKey) {
+        UserEntity user = userRepository.findByPublicKey(publicKey).orElseGet(() -> register(publicKey));
         user.updateNonce();
-        return userRepository.save(user).getNonce();
+        userRepository.save(user);
     }
 
     @Override

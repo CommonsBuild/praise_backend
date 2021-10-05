@@ -1,4 +1,4 @@
-package com.praisesystem.backend.security;
+package com.praisesystem.backend.configuration.configs.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 

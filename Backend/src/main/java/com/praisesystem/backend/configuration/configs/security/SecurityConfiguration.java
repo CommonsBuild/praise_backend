@@ -1,8 +1,8 @@
-package com.praisesystem.backend.configuration.configs;
+package com.praisesystem.backend.configuration.configs.security;
 
-import com.praisesystem.backend.security.NoPasswordEncoder;
-import com.praisesystem.backend.security.jwt.JwtConfigurer;
-import com.praisesystem.backend.security.jwt.JwtTokenProvider;
+import com.praisesystem.backend.configuration.configs.security.jwt.JwtConfigurer;
+import com.praisesystem.backend.configuration.configs.security.jwt.JwtTokenProvider;
+import com.praisesystem.backend.configuration.properties.ApplicationProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,9 +31,10 @@ import java.util.List;
 @EnableWebSecurity
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     Environment environment;
+    ApplicationProperties properties;
     JwtTokenProvider jwtTokenProvider;
 
     static String ADMIN_ENDPOINT = "/api/admin/**";
@@ -97,12 +100,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+        configuration.setAllowedOrigins(Collections.singletonList(properties.getFrontendUrl()));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
-
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
 }
