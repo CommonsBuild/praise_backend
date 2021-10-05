@@ -1,3 +1,2 @@
 rootProject.name = 'PraiseSystem'
 include('Backend', 'DiscordClient', 'TelegramClient')
-
