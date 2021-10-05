@@ -29,13 +29,9 @@ public class AuthParamsValidator {
                 new MessageNonceException("The nonce in the message does not match the user's nonce"));
     }
 
-    public void validateMessageSignature(String publicKey, String message, String signature) {
-        Precondition.ifFalseThrow(verifyAddressFromMessageAndSignature(publicKey, message, signature),
+    public static void validateMessageSignature(String publicKey, String message, String signature) {
+        Precondition.ifFalseThrow(publicKey.equals(getPubKeyFromMessageAndSignature(message, signature)),
                 new MessageSignatureException("Access denied"));
-    }
-
-    public static boolean verifyAddressFromMessageAndSignature(String publicKey, String message, String signature) {
-        return publicKey.equals(getPubKeyFromMessageAndSignature(message, signature));
     }
 
     public static String getPubKeyFromMessageAndSignature(String message, String signature) {

@@ -50,7 +50,7 @@ public class AuthController {
             // Check if message contains user nonce && pubkey && signature is correct
             AuthParamsValidator.validateMessagePublicKey(message, publicKey);
             AuthParamsValidator.validateMessageNonce(message, userNonce);
-            AuthParamsValidator.verifyAddressFromMessageAndSignature(publicKey, message, signature);
+            AuthParamsValidator.validateMessageSignature(publicKey, message, signature);
 
             // Authenticate user and update nonce
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(publicKey, ""));
