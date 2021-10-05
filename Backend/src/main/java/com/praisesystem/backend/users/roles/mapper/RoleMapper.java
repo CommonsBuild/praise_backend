@@ -21,7 +21,7 @@ public interface RoleMapper {
 
     @RoleToString
     default String roleToString(RoleEntity role) {
-        return role.getCode().getLabel();
+        return role.getCode().name();
     }
 
     @RolesToStringList

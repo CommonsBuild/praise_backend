@@ -1,7 +1,6 @@
 package com.praisesystem.backend.users.controller;
 
 import com.praisesystem.backend.users.dto.UserDto;
-import com.praisesystem.backend.users.model.UserEntity;
 import com.praisesystem.backend.users.services.UserService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,7 +29,7 @@ public class UserAdminController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserEntity findById(@PathVariable("id") Long id) {
+    public UserDto findById(@PathVariable("id") Long id) {
         return userService.findById(id);
     }
 }

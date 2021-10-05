@@ -12,9 +12,9 @@ public interface UserTransactionalService {
 
     List<UserDto> findAll();
 
-    UserEntity findById(Long id);
+    UserDto findById(Long id);
 
-    UserEntity findByPublicKey(String publicKey);
+    UserDto findByPublicKey(String publicKey);
 
-    String updateNonceByPublicKey(String publicKey);
+    void updateNonceByPublicKey(String publicKey);
 }

@@ -1,7 +1,6 @@
 package com.praisesystem.backend.configuration.configs.security.jwt;
 
-import com.praisesystem.backend.users.roles.model.RoleEntity;
-import com.praisesystem.backend.users.model.UserEntity;
+import com.praisesystem.backend.users.dto.UserDto;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public final class JwtUserFactory {
 
-    public static JwtUser create(UserEntity user) {
+    public static JwtUser create(UserDto user) {
         return new JwtUser(
                 user.getId(),
                 user.getPublicKey(),
@@ -21,7 +20,8 @@ public final class JwtUserFactory {
                 mapRolesToGrantedAuthorities(new ArrayList<>(user.getRoles()))
         );
     }
-    private static List<GrantedAuthority> mapRolesToGrantedAuthorities(List<RoleEntity> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getCode().name())).collect(Collectors.toList());
+
+    private static List<GrantedAuthority> mapRolesToGrantedAuthorities(List<String> roles) {
+        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 }

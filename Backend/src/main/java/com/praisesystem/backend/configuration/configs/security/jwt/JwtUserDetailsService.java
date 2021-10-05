@@ -1,5 +1,6 @@
 package com.praisesystem.backend.configuration.configs.security.jwt;
 
+import com.praisesystem.backend.users.dto.UserDto;
 import com.praisesystem.backend.users.services.UserService;
 import com.praisesystem.backend.users.model.UserEntity;
 import lombok.AccessLevel;
@@ -19,7 +20,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String address) throws UsernameNotFoundException {
-        UserEntity user = service.findByPublicKey(address);
+        UserDto user = service.findByPublicKey(address);
         return JwtUserFactory.create(user);
     }
 }

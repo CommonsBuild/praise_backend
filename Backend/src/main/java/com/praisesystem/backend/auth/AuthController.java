@@ -5,8 +5,9 @@ import com.praisesystem.backend.auth.dto.AuthenticationResponseDto;
 import com.praisesystem.backend.auth.dto.GetNonceResponseDto;
 import com.praisesystem.backend.common.validators.EthereumAddress;
 import com.praisesystem.backend.configuration.configs.security.jwt.JwtTokenProvider;
-import com.praisesystem.backend.users.model.UserEntity;
+import com.praisesystem.backend.users.dto.UserDto;
 import com.praisesystem.backend.users.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Tag(name = "Authentication Controller")
 @Slf4j
 @Validated
 @RestController
@@ -42,7 +44,7 @@ public class AuthController {
             String signature = request.getSignature();
 
             // Find or create user
-            UserEntity user = userService.findByPublicKey(publicKey);
+            UserDto user = userService.findByPublicKey(publicKey);
             String userNonce = user.getNonce();
 
             // Check if message contains user nonce && pubkey && signature is correct
@@ -63,7 +65,7 @@ public class AuthController {
 
     @GetMapping(value = "/nonce", produces = MediaType.APPLICATION_JSON_VALUE)
     public GetNonceResponseDto nonce(@Valid @EthereumAddress @RequestParam("publicKey") String publicKey) {
-        UserEntity user = userService.findByPublicKey(publicKey);
+        UserDto user = userService.findByPublicKey(publicKey);
         return new GetNonceResponseDto(user.getPublicKey(), user.getNonce());
     }
 }

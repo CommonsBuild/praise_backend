@@ -2,13 +2,13 @@ package com.praisesystem.backend.users.impl;
 
 import com.praisesystem.backend.common.exceptions.exceptiontypes.NotFoundObjectException;
 import com.praisesystem.backend.configuration.properties.ApplicationProperties;
-import com.praisesystem.backend.users.roles.RoleService;
-import com.praisesystem.backend.users.roles.enums.RoleCode;
-import com.praisesystem.backend.users.roles.model.RoleEntity;
 import com.praisesystem.backend.users.UserRepository;
 import com.praisesystem.backend.users.dto.UserDto;
 import com.praisesystem.backend.users.mapper.UserMapper;
 import com.praisesystem.backend.users.model.UserEntity;
+import com.praisesystem.backend.users.roles.RoleService;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
+import com.praisesystem.backend.users.roles.model.RoleEntity;
 import com.praisesystem.backend.users.services.UserTransactionalService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -60,22 +59,22 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
     }
 
     @Override
-    public UserEntity findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundObjectException("User not found"));
+    public UserDto findById(Long id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new NotFoundObjectException("User not found"));
+        return userMapper.toUserDto(user);
     }
 
     @Override
-    public UserEntity findByPublicKey(String publicKey) {
-        Optional<UserEntity> optionalUser =  userRepository.findByPublicKey(publicKey);
-        return optionalUser.orElseGet(() -> register(publicKey));
+    public UserDto findByPublicKey(String publicKey) {
+        UserEntity user = userRepository.findByPublicKey(publicKey).orElse(register(publicKey));
+        return userMapper.toUserDto(user);
     }
 
     @Override
-    public String updateNonceByPublicKey(String publicKey) {
-        UserEntity user = findByPublicKey(publicKey);
-
+    public void updateNonceByPublicKey(String publicKey) {
+        UserEntity user = userRepository.findByPublicKey(publicKey).orElse(register(publicKey));
         user.updateNonce();
-        return userRepository.save(user).getNonce();
+        userRepository.save(user);
     }
 
     @Override
