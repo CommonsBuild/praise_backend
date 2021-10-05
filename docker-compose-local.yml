@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  db:
+    container_name: peeker_db
+    image: postgres:13-alpine3.14
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: praise_db
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: praisesystem@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: praisesystem
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    links:
+      - "db:pgsql-server"
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+  pgadmin-data:
