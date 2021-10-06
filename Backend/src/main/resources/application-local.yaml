@@ -11,6 +11,11 @@ spring:
     import:
 #      - classpath:db/local/h2_db.properties
       - classpath:db/local/postgres_db.properties
+  cache:
+    cache-names:
+      - buckets
+    caffeine:
+      spec: maximumSize=1000000,expireAfterAccess=3600s
 # ------------------------------------ PRAISESYSTEM PROPERTIES -------------------------------------
 praise-system:
   admin-addresses:
@@ -24,11 +29,13 @@ jwt:
     secret: somesecret
     expirationTimeMS: 86400000
 # ------------------------------------ RATE-LIMIT PROPERTIES --------------------------------------
+
+
 bucket4j:
   enabled: true
   filters:
     - cache-name: buckets
-      url: .*
+      url: /*
       rate-limits:
         - bandwidths:
             - capacity: 5

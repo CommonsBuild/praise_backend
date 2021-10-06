@@ -28,7 +28,6 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(publicKey);
         claims.put("roles", roles);
 
-        log.info(properties.toString());
         Date now = new Date();
         Date expirationAt = new Date(now.getTime() + properties.getExpirationTimeMs());
 

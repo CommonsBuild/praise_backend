@@ -15,6 +15,7 @@ public class JwtUser implements UserDetails {
     Long id;
     String publicKey;
     String nonce;
+
     Collection<? extends GrantedAuthority> authorities;
 
 

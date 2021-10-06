@@ -24,5 +24,4 @@ public class BaseEntity {
     @UpdateTimestamp
     @Column(name = "modified_at")
     Date updatedAt;
-
 }
