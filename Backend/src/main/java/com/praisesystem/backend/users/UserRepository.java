@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    Optional<UserEntity> findByPublicKey(String publicKey);
-    List<UserEntity> findByPublicKeyIn(List<String> publicKeys);
+    Optional<UserEntity> findByEthereumAddress(String ethereumAddress);
+    List<UserEntity> findByEthereumAddressIn(List<String> ethereumAddresss);
 }

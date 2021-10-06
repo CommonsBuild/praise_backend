@@ -35,26 +35,26 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
         List<RoleEntity> roles = roleService.findAll();
         List<String> adminAddresses = properties.getAdminAddresses();
 
-        List<String> existingAdmins = userRepository.findByPublicKeyIn(adminAddresses)
+        List<String> existingAdmins = userRepository.findByEthereumAddressIn(adminAddresses)
                 .stream()
-                .map(UserEntity::getPublicKey)
+                .map(UserEntity::getEthereumAddress)
                 .collect(Collectors.toList());
 
         List<UserEntity> newAdmins = adminAddresses.stream()
                 .distinct()
                 .filter(address -> !existingAdmins.contains(address))
-                .map(address -> userMapper.toNewUserFromPublicKeyAndRoles(address, roles))
+                .map(address -> userMapper.toNewUserFromEthereumAddressAndRoles(address, roles))
                 .collect(Collectors.toList());
 
         userRepository.saveAll(newAdmins)
-                .forEach(user -> log.info("[APPLICATION RUNNER] Admin with address ({}) successfully created.", user.getPublicKey()));
+                .forEach(user -> log.info("[APPLICATION RUNNER] Admin with address ({}) successfully created.", user.getEthereumAddress()));
         ;
     }
 
     @Override
-    public UserEntity register(String publicKey) {
+    public UserEntity register(String ethereumAddress) {
         RoleEntity roleUser = roleService.findByCode(RoleCode.ROLE_USER);
-        UserEntity newUser = userMapper.toNewUserFromPublicKeyAndRoles(publicKey, Collections.singletonList(roleUser));
+        UserEntity newUser = userMapper.toNewUserFromEthereumAddressAndRoles(ethereumAddress, Collections.singletonList(roleUser));
         return userRepository.save(newUser);
     }
 
@@ -65,14 +65,14 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
     }
 
     @Override
-    public UserDto findByPublicKey(String publicKey) {
-        UserEntity user = userRepository.findByPublicKey(publicKey).orElseGet(() -> register(publicKey));
+    public UserDto findByEthereumAddress(String ethereumAddress) {
+        UserEntity user = userRepository.findByEthereumAddress(ethereumAddress).orElseGet(() -> register(ethereumAddress));
         return userMapper.toUserDto(user);
     }
 
     @Override
-    public void updateNonceByPublicKey(String publicKey) {
-        UserEntity user = userRepository.findByPublicKey(publicKey).orElseGet(() -> register(publicKey));
+    public void updateNonceByEthereumAddress(String ethereumAddress) {
+        UserEntity user = userRepository.findByEthereumAddress(ethereumAddress).orElseGet(() -> register(ethereumAddress));
         user.updateNonce();
         userRepository.save(user);
     }

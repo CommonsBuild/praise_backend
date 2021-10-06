@@ -2,7 +2,7 @@ package com.praisesystem.backend.auth;
 
 import com.praisesystem.backend.common.exceptions.Precondition;
 import com.praisesystem.backend.common.exceptions.exceptiontypes.MessageNonceException;
-import com.praisesystem.backend.common.exceptions.exceptiontypes.MessagePublicKeyException;
+import com.praisesystem.backend.common.exceptions.exceptiontypes.MessageEthereumAddressException;
 import com.praisesystem.backend.common.exceptions.exceptiontypes.MessageSignatureException;
 import com.praisesystem.backend.common.exceptions.exceptiontypes.ValidationException;
 import lombok.NoArgsConstructor;
@@ -19,9 +19,9 @@ public class AuthParamsValidator {
 
     static final String ETHEREUM_PREFIX = "0x";
 
-    public static void validateMessagePublicKey(String message, String publicKey) {
-        Precondition.ifFalseThrow(message.contains(publicKey),
-                new MessagePublicKeyException("The public key in the message does not match the user's public key"));
+    public static void validateMessageEthereumAddress(String message, String ethereumAddress) {
+        Precondition.ifFalseThrow(message.contains(ethereumAddress),
+                new MessageEthereumAddressException("The public key in the message does not match the user's public key"));
     }
 
     public static void validateMessageNonce(String message, String nonce) {
@@ -29,8 +29,8 @@ public class AuthParamsValidator {
                 new MessageNonceException("The nonce in the message does not match the user's nonce"));
     }
 
-    public static void validateMessageSignature(String publicKey, String message, String signature) {
-        Precondition.ifFalseThrow(publicKey.equals(getPubKeyFromMessageAndSignature(message, signature)),
+    public static void validateMessageSignature(String ethereumAddress, String message, String signature) {
+        Precondition.ifFalseThrow(ethereumAddress.equals(getPubKeyFromMessageAndSignature(message, signature)),
                 new MessageSignatureException("Access denied"));
     }
 

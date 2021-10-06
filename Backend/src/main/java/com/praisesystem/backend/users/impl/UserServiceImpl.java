@@ -30,13 +30,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findByPublicKey(String publicKey) {
-        return userTransactionalService.findByPublicKey(publicKey);
+    public UserDto findByEthereumAddress(String ethereumAddress) {
+        return userTransactionalService.findByEthereumAddress(ethereumAddress);
     }
 
     @Override
-    public void updateNonceByPublicKey(String publicKey) {
-        userTransactionalService.updateNonceByPublicKey(publicKey);
+    public void updateNonceByEthereumAddress(String ethereumAddress) {
+        userTransactionalService.updateNonceByEthereumAddress(ethereumAddress);
     }
 
     @Override

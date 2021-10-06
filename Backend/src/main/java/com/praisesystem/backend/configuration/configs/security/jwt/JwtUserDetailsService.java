@@ -20,7 +20,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String address) throws UsernameNotFoundException {
-        UserDto user = service.findByPublicKey(address);
+        UserDto user = service.findByEthereumAddress(address);
         return JwtUserFactory.create(user);
     }
 }

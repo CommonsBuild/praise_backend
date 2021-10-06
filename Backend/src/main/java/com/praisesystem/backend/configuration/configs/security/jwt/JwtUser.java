@@ -13,7 +13,7 @@ import java.util.Collection;
 public class JwtUser implements UserDetails {
 
     Long id;
-    String publicKey;
+    String ethereumAddress;
     String nonce;
 
     Collection<? extends GrantedAuthority> authorities;
@@ -31,7 +31,7 @@ public class JwtUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return publicKey;
+        return ethereumAddress;
     }
 
     @Override

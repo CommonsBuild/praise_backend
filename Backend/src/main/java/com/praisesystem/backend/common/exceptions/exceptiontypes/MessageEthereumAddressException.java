@@ -3,13 +3,13 @@ package com.praisesystem.backend.common.exceptions.exceptiontypes;
 import com.praisesystem.backend.common.exceptions.BaseRuntimeException;
 import com.praisesystem.backend.common.exceptions.ErrorCodes;
 
-public class MessagePublicKeyException extends BaseRuntimeException {
+public class MessageEthereumAddressException extends BaseRuntimeException{
 
-    public MessagePublicKeyException(String message) {
+    public MessageEthereumAddressException(String message) {
         super(ErrorCodes.ACCESS_DENIED, message);
     }
 
-    public MessagePublicKeyException(ErrorCodes errorCode, String message) {
+    public MessageEthereumAddressException(ErrorCodes errorCode, String message) {
         super(errorCode, message);
     }
 }

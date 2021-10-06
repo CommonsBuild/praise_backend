@@ -21,12 +21,12 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEntity extends BaseEntity {
 
-    public UserEntity(String publicKey) {
-        this.publicKey = publicKey;
+    public UserEntity(String ethereumAddress) {
+        this.ethereumAddress = ethereumAddress;
     }
 
-    @Column(name = "public_key", unique = true, nullable = false)
-    String publicKey;
+    @Column(name = "ethereum_address", unique = true, nullable = false)
+    String ethereumAddress;
 
     @Column(name = "nonce", nullable = false)
     String nonce;

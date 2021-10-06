@@ -38,37 +38,37 @@ public class AuthController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public AuthenticationResponseDto auth(@Valid @RequestBody AuthenticationRequestDto request) {
-        log.info("[AUTH CONTROLLER] Authentication request for Ethereum address ({})", request.getPublicKey());
+        log.info("[AUTH CONTROLLER] Authentication request for Ethereum address ({})", request.getEthereumAddress());
         try {
-            String publicKey = request.getPublicKey();
+            String ethereumAddress = request.getEthereumAddress();
             String message = request.getMessage();
             String signature = request.getSignature();
 
             // Find or create user
-            UserDto user = userService.findByPublicKey(publicKey);
+            UserDto user = userService.findByEthereumAddress(ethereumAddress);
             String userNonce = user.getNonce();
 
             // Check if message contains user nonce && pubkey && signature is correct
-            AuthParamsValidator.validateMessagePublicKey(message, publicKey);
+            AuthParamsValidator.validateMessageEthereumAddress(message, ethereumAddress);
             AuthParamsValidator.validateMessageNonce(message, userNonce);
-            AuthParamsValidator.validateMessageSignature(publicKey, message, signature);
+            AuthParamsValidator.validateMessageSignature(ethereumAddress, message, signature);
 
             // Authenticate user and update nonce
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(publicKey, ""));
-            String token = jwtTokenProvider.generateToken(publicKey, user.getRoles());
-            userService.updateNonceByPublicKey(user.getPublicKey());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(ethereumAddress, ""));
+            String token = jwtTokenProvider.generateToken(ethereumAddress, user.getRoles());
+            userService.updateNonceByEthereumAddress(user.getEthereumAddress());
 
-            log.info("[AUTH CONTROLLER] Successful authentication for Ethereum address ({})", request.getPublicKey());
-            return new AuthenticationResponseDto(token, publicKey);
+            log.info("[AUTH CONTROLLER] Successful authentication for Ethereum address ({})", request.getEthereumAddress());
+            return new AuthenticationResponseDto(token, ethereumAddress);
         } catch (AuthenticationException | AccessDeniedException e) {
             throw new BadCredentialsException("Bad signature"); // TODO: 02.10.2021 Create custom exception
         }
     }
 
     @GetMapping(value = "/nonce", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GetNonceResponseDto nonce(@Valid @EthereumAddress @RequestParam("publicKey") String publicKey) {
-        log.info("[AUTH CONTROLLER] Nonce request for Ethereum address ({})", publicKey);
-        UserDto user = userService.findByPublicKey(publicKey);
-        return new GetNonceResponseDto(user.getPublicKey(), user.getNonce());
+    public GetNonceResponseDto nonce(@Valid @EthereumAddress @RequestParam("ethereumAddress") String ethereumAddress) {
+        log.info("[AUTH CONTROLLER] Nonce request for Ethereum address ({})", ethereumAddress);
+        UserDto user = userService.findByEthereumAddress(ethereumAddress);
+        return new GetNonceResponseDto(user.getEthereumAddress(), user.getNonce());
     }
 }

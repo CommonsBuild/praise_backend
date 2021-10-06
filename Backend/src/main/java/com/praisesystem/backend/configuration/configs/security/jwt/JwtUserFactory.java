@@ -15,7 +15,7 @@ public final class JwtUserFactory {
     public static JwtUser create(UserDto user) {
         return new JwtUser(
                 user.getId(),
-                user.getPublicKey(),
+                user.getEthereumAddress(),
                 user.getNonce(),
                 mapRolesToGrantedAuthorities(new ArrayList<>(user.getRoles()))
         );

@@ -24,8 +24,8 @@ public class JwtTokenProvider {
     JwtTokenProperties properties;
     UserDetailsService userDetailsService;
 
-    public String generateToken(String publicKey, List<String> roles) {
-        Claims claims = Jwts.claims().setSubject(publicKey);
+    public String generateToken(String ethereumAddress, List<String> roles) {
+        Claims claims = Jwts.claims().setSubject(ethereumAddress);
         claims.put("roles", roles);
 
         Date now = new Date();
@@ -40,11 +40,11 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getPublicKeyFromToken(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(getEthereumAddressFromToken(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String getPublicKeyFromToken(String token) {
+    public String getEthereumAddressFromToken(String token) {
         return Jwts.parser().setSigningKey(properties.getSecret()).parseClaimsJws(token).getBody().getSubject();
     }
 

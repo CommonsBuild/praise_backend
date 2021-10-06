@@ -9,7 +9,7 @@ public class AuthenticationResponseDto {
     @Schema(description = "JWT Access token")
     String accessToken;
     @Schema(description = "Public key")
-    String publicKey;
+    String ethereumAddress;
     @Schema(description = "Token type")
     String tokenType = "Bearer";
 }

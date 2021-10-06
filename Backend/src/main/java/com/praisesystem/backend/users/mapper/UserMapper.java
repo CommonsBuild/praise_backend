@@ -22,11 +22,11 @@ public interface UserMapper {
 
     List<UserDto> toUserDtos(List<UserEntity> userEntities);
 
-    default UserEntity toNewUserFromPublicKeyAndRoles(String publicKey, List<RoleEntity> roles) {
-        if (publicKey == null) {
+    default UserEntity toNewUserFromEthereumAddressAndRoles(String ethereumAddress, List<RoleEntity> roles) {
+        if (ethereumAddress == null) {
             return null;
         }
-        UserEntity user = new UserEntity(publicKey);
+        UserEntity user = new UserEntity(ethereumAddress);
         if (roles != null && !roles.isEmpty()) {
             user.getRoles().addAll(roles);
         }

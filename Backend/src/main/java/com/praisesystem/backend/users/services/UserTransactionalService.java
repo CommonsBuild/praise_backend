@@ -14,7 +14,7 @@ public interface UserTransactionalService {
 
     UserDto findById(Long id);
 
-    UserDto findByPublicKey(String publicKey);
+    UserDto findByEthereumAddress(String ethereumAddress);
 
-    void updateNonceByPublicKey(String publicKey);
+    void updateNonceByEthereumAddress(String ethereumAddress);
 }
