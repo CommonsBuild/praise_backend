@@ -8,7 +8,7 @@ import lombok.Value;
 public class AuthenticationResponseDto {
     @Schema(description = "JWT Access token")
     String accessToken;
-    @Schema(description = "Public key")
+    @Schema(description = "Ethereum address")
     String ethereumAddress;
     @Schema(description = "Token type")
     String tokenType = "Bearer";

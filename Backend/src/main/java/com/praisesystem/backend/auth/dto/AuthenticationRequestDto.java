@@ -12,7 +12,7 @@ public class AuthenticationRequestDto {
     @NotBlank
     @EthereumAddress
     // TODO: 03.10.2021 create custom ethAddress validator 
-    @Schema(description = "Ethereum public key", required = true)
+    @Schema(description = "Ethereum ethereum address", required = true)
     String ethereumAddress;
 
     @NotBlank

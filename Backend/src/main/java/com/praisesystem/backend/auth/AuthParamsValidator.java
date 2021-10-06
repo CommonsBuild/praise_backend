@@ -21,7 +21,7 @@ public class AuthParamsValidator {
 
     public static void validateMessageEthereumAddress(String message, String ethereumAddress) {
         Precondition.ifFalseThrow(message.contains(ethereumAddress),
-                new MessageEthereumAddressException("The public key in the message does not match the user's public key"));
+                new MessageEthereumAddressException("The ethereum address in the message does not match the user's ethereum address"));
     }
 
     public static void validateMessageNonce(String message, String nonce) {

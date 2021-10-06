@@ -6,7 +6,7 @@ import lombok.Value;
 @Value
 @Schema(description = "Get nonce response object")
 public class GetNonceResponseDto {
-    @Schema(description = "Public key")
+    @Schema(description = "Ethereum address")
     String ethereumAddress;
     @Schema(description = "Nonce")
     String nonce;
