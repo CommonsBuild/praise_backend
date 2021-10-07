@@ -19,7 +19,7 @@ spring:
 # ------------------------------------ PRAISESYSTEM PROPERTIES -------------------------------------
 praise-system:
   admin-addresses:
-    - "0xc19AbEBaa5BeEE7eE2b20ee990eC63f02B0A0D0c"
+    - "0xc19AbEBaa5BeEE7eE2b20ee990eC63f02B0A0D0c" # JUST ADD YOUR METAMASK ADDRESS HERE
     - "0xc19AbEBaa5BeEE7eE2b20ee990eC63f02B0A0D11"
     - "0xc19AbEBaa5BeEE7eE2b20ee990eC63f02B0A0D22"
   frontend-url: "http://localhost:3000"

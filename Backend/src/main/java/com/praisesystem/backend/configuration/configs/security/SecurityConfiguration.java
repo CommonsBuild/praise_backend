@@ -17,14 +17,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
-//@EnableWebMvc
 @EnableWebSecurity
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -76,36 +79,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 httpBasic().disable()
                 // disable csrf
                 .csrf().disable()
-//                .cors().and()
+                .cors().and()
                 // session creation policy STATELESS
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 // allow all requests
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 // allow for only admin
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                // allow for only quanitifers
-//                .antMatchers(QUANTIFICATION_ENDPOINT).hasRole("QUANTIFIER")
-                // now it doesn't works - 403. will dig it tomorrow
-//                .antMatchers("/swagger**").permitAll() // TODO: 02.10.2021 disable
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
     }
 
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Collections.singletonList(properties.getFrontendUrl()));
-//        configuration.setAllowedMethods(Collections.singletonList("*"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList(properties.getFrontendUrl()));
+        configuration.setAllowedMethods(Collections.singletonList("*"));
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
