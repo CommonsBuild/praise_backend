@@ -2,6 +2,7 @@ package com.praisesystem.backend.users.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.praisesystem.backend.common.persistence.BaseEntity;
+import com.praisesystem.backend.pools.QuantPoolEntity;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -21,22 +22,24 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEntity extends BaseEntity {
 
-    public UserEntity(String ethereumAddress) {
-        this.ethereumAddress = ethereumAddress;
-    }
-
     @Column(name = "ethereum_address", unique = true, nullable = false)
     String ethereumAddress;
-
     @Column(name = "nonce", nullable = false)
     String nonce;
-
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     Set<RoleEntity> roles = new HashSet<>();
+
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "quantifiers", fetch = FetchType.LAZY)
+    Set<QuantPoolEntity> quantificationPools = new HashSet<>();
+
+    public UserEntity(String ethereumAddress) {
+        this.ethereumAddress = ethereumAddress;
+    }
 
     public void updateNonce() {
         byte[] newNonce = new byte[12];
