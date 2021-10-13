@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @MappedSuperclass
@@ -18,10 +18,10 @@ public class BaseEntity {
     Long id;
 
     @CreationTimestamp
-    @Column(name = "created_at")
-    Date createdAt;
+    @Column(name = "created_at", columnDefinition = "timestamp")
+    LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "modified_at")
-    Date updatedAt;
+    @Column(name = "modified_at", columnDefinition = "timestamp")
+    LocalDateTime updatedAt;
 }

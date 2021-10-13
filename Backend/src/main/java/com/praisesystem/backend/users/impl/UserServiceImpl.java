@@ -1,6 +1,7 @@
 package com.praisesystem.backend.users.impl;
 
 import com.praisesystem.backend.users.dto.UserDto;
+import com.praisesystem.backend.users.model.UserEntity;
 import com.praisesystem.backend.users.services.UserService;
 import com.praisesystem.backend.users.services.UserTransactionalService;
 import lombok.AccessLevel;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -22,6 +24,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findAll() {
         return userTransactionalService.findAll();
+    }
+
+    @Override
+    public Long countUsers() {
+        return userTransactionalService.countUsers();
+    }
+
+    @Override
+    public Set<UserEntity> findRandomUsers(Long requiredCount) {
+        return userTransactionalService.findRandomUsers(requiredCount);
     }
 
     @Override

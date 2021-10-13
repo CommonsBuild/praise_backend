@@ -16,6 +16,12 @@ spring:
       - buckets
     caffeine:
       spec: maximumSize=1000000,expireAfterAccess=3600s
+#  quartz:
+#    job-store-type: jdbc
+#    jdbc:
+#      initialize-schema: never
+#    properties:
+#      org.quartz.threadPool.threadCount: 5
 # ------------------------------------ PRAISESYSTEM PROPERTIES -------------------------------------
 praise-system:
   admin-addresses:

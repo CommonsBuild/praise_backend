@@ -15,14 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @Transactional
-@AllArgsConstructor // TODO: 03.10.2021 Refactor all methods to return UserDTO 
+@AllArgsConstructor
 public class UserTransactionalServiceImpl implements UserTransactionalService {
 
     ApplicationProperties properties;
@@ -75,6 +75,24 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
         UserEntity user = userRepository.findByEthereumAddress(ethereumAddress).orElseGet(() -> register(ethereumAddress));
         user.updateNonce();
         userRepository.save(user);
+    }
+
+    @Override
+    public Long countUsers() {
+        return userRepository.count();
+    }
+
+    @Override
+    public Set<UserEntity> findRandomUsers(Long requiredCount) {
+        Set<Long> quantifiersIds = new HashSet<>();
+
+        List<Long> idsInRepo = userRepository.getAllIds();
+        int totalIds = idsInRepo.size();
+
+        while (quantifiersIds.size() < requiredCount) {
+            quantifiersIds.add(idsInRepo.get((int) ThreadLocalRandom.current().nextLong(totalIds)));
+        }
+        return userRepository.findUserEntitiesByIdIn(quantifiersIds);
     }
 
     @Override

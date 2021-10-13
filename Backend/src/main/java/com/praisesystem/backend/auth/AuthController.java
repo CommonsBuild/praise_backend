@@ -7,6 +7,7 @@ import com.praisesystem.backend.common.validators.EthereumAddress;
 import com.praisesystem.backend.configuration.configs.security.jwt.JwtTokenProvider;
 import com.praisesystem.backend.users.dto.UserDto;
 import com.praisesystem.backend.users.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,7 @@ public class AuthController {
     JwtTokenProvider jwtTokenProvider;
     UserService userService;
 
+    @Operation(description = "Authentication")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public AuthenticationResponseDto auth(@Valid @RequestBody AuthenticationRequestDto request) {
         log.info("[AUTH CONTROLLER] Authentication request for Ethereum address ({})", request.getEthereumAddress());
@@ -65,6 +67,7 @@ public class AuthController {
         }
     }
 
+    @Operation(description = "Get nonce")
     @GetMapping(value = "/nonce", produces = MediaType.APPLICATION_JSON_VALUE)
     public GetNonceResponseDto nonce(@Valid @EthereumAddress @RequestParam("ethereumAddress") String ethereumAddress) {
         log.info("[AUTH CONTROLLER] Nonce request for Ethereum address ({})", ethereumAddress);

@@ -4,18 +4,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.praisesystem.backend.common.persistence.BaseEntity;
 import com.praisesystem.backend.users.roles.enums.RoleCode;
 import com.praisesystem.backend.users.model.UserEntity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
-@Getter
+@Data
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor
