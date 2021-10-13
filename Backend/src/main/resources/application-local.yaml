@@ -10,7 +10,7 @@ spring:
   config:
     import:
 #      - classpath:db/local/h2_db.properties
-      - classpath:db/local/postgres_db.properties
+      - classpath:db/local/postgres_db.yaml
   cache:
     cache-names:
       - buckets

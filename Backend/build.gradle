@@ -39,7 +39,6 @@ dependencies {
     implementation 'org.web3j:core:5.0.0'
 //    runtimeOnly 'com.h2database:h2:1.4.200'
 
-
     compileOnly 'org.projectlombok:lombok'
     
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
