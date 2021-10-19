@@ -19,7 +19,9 @@ public interface PeriodMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "pool", ignore = true)
+    @Mapping(target = "quantifiers", ignore = true)
+    @Mapping(target = "praises", ignore = true)
+    @Mapping(target = "quantifiedPraises", ignore = true)
     @Mapping(target = "name", source = "dto.name")
     @Mapping(target = "endDate", source = "dto.endDate")
     PeriodEntity toNewPeriod(CreatePeriodRequestDto dto);

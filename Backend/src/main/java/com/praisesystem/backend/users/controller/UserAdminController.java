@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
+@Slf4j(topic = "[USER ADMIN CONTROLLER]")
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/api/admin/users")

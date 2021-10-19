@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
+@Slf4j(topic = "[ROLE SERVICE]")
 @Service
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -31,7 +31,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleEntity createByRoleCode(RoleCode code) {
-        return roleRepository.save(new RoleEntity(code));
+    public void createByRoleCode(RoleCode code) {
+        roleRepository.save(new RoleEntity(code));
+        log.info("Role ({}) created.", code.getLabel());
     }
 }

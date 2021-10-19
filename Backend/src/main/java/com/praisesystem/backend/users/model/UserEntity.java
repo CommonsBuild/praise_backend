@@ -2,7 +2,7 @@ package com.praisesystem.backend.users.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.praisesystem.backend.common.persistence.BaseEntity;
-import com.praisesystem.backend.pools.QuantPoolEntity;
+import com.praisesystem.backend.periods.model.PeriodEntity;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -24,8 +24,10 @@ public class UserEntity extends BaseEntity {
 
     @Column(name = "ethereum_address", unique = true, nullable = false)
     String ethereumAddress;
+
     @Column(name = "nonce", nullable = false)
     String nonce;
+
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
@@ -35,7 +37,7 @@ public class UserEntity extends BaseEntity {
 
     @JsonManagedReference
     @ManyToMany(mappedBy = "quantifiers", fetch = FetchType.LAZY)
-    Set<QuantPoolEntity> quantificationPools = new HashSet<>();
+    Set<PeriodEntity> quantificationPools = new HashSet<>();
 
     public UserEntity(String ethereumAddress) {
         this.ethereumAddress = ethereumAddress;

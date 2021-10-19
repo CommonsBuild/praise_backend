@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-@Slf4j
+@Slf4j(topic = "[USER TRANSACTIONAL SERVICE]")
 @Service
 @Transactional
 @AllArgsConstructor
@@ -47,7 +47,7 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
                 .collect(Collectors.toList());
 
         userRepository.saveAll(newAdmins)
-                .forEach(user -> log.info("[APPLICATION RUNNER] Admin with address ({}) successfully created.", user.getEthereumAddress()));
+                .forEach(user -> log.info("Admin with address ({}) successfully created.", user.getEthereumAddress()));
         ;
     }
 
