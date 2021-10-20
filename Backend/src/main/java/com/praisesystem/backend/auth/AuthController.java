@@ -60,7 +60,7 @@ public class AuthController {
             String token = jwtTokenProvider.generateToken(ethereumAddress, user.getRoles());
             userService.updateNonceByEthereumAddress(user.getEthereumAddress());
 
-            log.info("[AUTH CONTROLLER] Successful authentication for Ethereum address ({})", request.getEthereumAddress());
+            log.info("Successful authentication for Ethereum address ({})", request.getEthereumAddress());
             return new AuthenticationResponseDto(token, ethereumAddress);
         } catch (AuthenticationException | AccessDeniedException e) {
             throw new BadCredentialsException("Bad signature"); // TODO: 02.10.2021 Create custom exception

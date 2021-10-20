@@ -1,13 +1,12 @@
 package com.praisesystem.backend.periods.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -20,9 +19,11 @@ public class PeriodDto {
     @Schema(description = "Period name")
     String name;
 
-    @JsonFormat(pattern = "dd.MM.yyyy")
-    @Schema(description = "Period end date", pattern = "dd.MM.yyyy")
-    LocalDate endDate;
+    @Schema(description = "Period end date")
+    LocalDateTime endDate;
+
+    @Schema(description = "Total number of praises")
+    Long totalPraises;
 
 //    @Schema(description = "Quantifiers list")
 //    List<UserDto> quantifiers;

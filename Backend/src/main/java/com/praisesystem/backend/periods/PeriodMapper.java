@@ -1,5 +1,7 @@
 package com.praisesystem.backend.periods;
 
+import com.praisesystem.backend.common.mappers.CommonMapper;
+import com.praisesystem.backend.common.mappers.support.CollectionSize;
 import com.praisesystem.backend.periods.dto.CreatePeriodRequestDto;
 import com.praisesystem.backend.periods.dto.PeriodDto;
 import com.praisesystem.backend.periods.model.PeriodEntity;
@@ -13,7 +15,7 @@ import org.mapstruct.ReportingPolicy;
         componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.ERROR,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        uses = {UserMapper.class}
+        uses = {UserMapper.class, CommonMapper.class}
 )
 public interface PeriodMapper {
     @Mapping(target = "id", ignore = true)
@@ -26,5 +28,6 @@ public interface PeriodMapper {
     @Mapping(target = "endDate", source = "dto.endDate")
     PeriodEntity toNewPeriod(CreatePeriodRequestDto dto);
 
+    @Mapping(target = "totalPraises", source = "praises", qualifiedBy = CollectionSize.class)
     PeriodDto toPeriodDto(PeriodEntity newPeriod);
 }
