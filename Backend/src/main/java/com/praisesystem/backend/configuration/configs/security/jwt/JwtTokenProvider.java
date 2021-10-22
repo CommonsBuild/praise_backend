@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-@Slf4j
+@Slf4j(topic = "[JWT TOKEN PROVIDER]")
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

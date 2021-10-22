@@ -11,10 +11,13 @@ import java.util.List;
 public class UserDto {
     @Schema(description = "User ID")
     Long id;
+
     @Schema(description = "User Ethereum address")
     String ethereumAddress;
+
     @Schema(description = "List of user roles")
     List<String> roles;
+
     @JsonIgnore
     String nonce;
 }

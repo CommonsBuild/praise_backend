@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
-public class PeriodEndDateValidator implements ConstraintValidator<PeriodEndDate, LocalDate> {
+public class PeriodEndDateValidator implements ConstraintValidator<PeriodEndDate, LocalDateTime> {
 
    private final PeriodService periodService;
    private int minimumDays;
@@ -18,8 +18,8 @@ public class PeriodEndDateValidator implements ConstraintValidator<PeriodEndDate
        minimumDays = constraint.minimumDays();
     }
 
-    public boolean isValid(LocalDate endDate, ConstraintValidatorContext context) {
-       LocalDate lastDate = periodService.getLastPeriodEndDate();
+    public boolean isValid(LocalDateTime endDate, ConstraintValidatorContext context) {
+       LocalDateTime lastDate = periodService.getLastPeriodEndDate();
        return lastDate == null || lastDate.plusDays(minimumDays).isBefore(endDate);
     }
 }

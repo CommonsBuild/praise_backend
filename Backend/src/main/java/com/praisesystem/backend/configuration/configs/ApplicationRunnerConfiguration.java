@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Slf4j
+@Slf4j(topic = "[APPLICATION RUNNER]")
 @Configuration
 public class ApplicationRunnerConfiguration {
 
@@ -30,19 +30,19 @@ public class ApplicationRunnerConfiguration {
     }
 
     private void createRoles(RoleService roleService) {
-        log.info("[APPLICATION RUNNER] The process of creating roles has started");
+        log.info("The process of creating roles has started");
         List<RoleEntity> roles = roleService.findAll();
         Stream.of(RoleCode.values())
                 .filter(code -> !roles.stream().map(RoleEntity::getCode)
                         .collect(Collectors.toList())
                         .contains(code)
                 ).forEach(roleService::createByRoleCode);
-        log.info("[APPLICATION RUNNER] The process of creating roles has been completed");
+        log.info("The process of creating roles has been completed");
     }
 
     private void createAdmin(UserService userService) {
-        log.info("[APPLICATION RUNNER] The process of creating admin account has started");
+        log.info("The process of creating admin account has started");
         userService.createAdmin();
-        log.info("[APPLICATION RUNNER] The process of creating admin account has been completed");
+        log.info("The process of creating admin account has been completed");
     }
 }

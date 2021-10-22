@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Tag(name = "Authentication Controller")
-@Slf4j
+@Slf4j(topic = "[AUTH CONTROLLER]")
 @Validated
 @RestController
 @AllArgsConstructor
@@ -40,7 +40,7 @@ public class AuthController {
     @Operation(description = "Authentication")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public AuthenticationResponseDto auth(@Valid @RequestBody AuthenticationRequestDto request) {
-        log.info("[AUTH CONTROLLER] Authentication request for Ethereum address ({})", request.getEthereumAddress());
+        log.info("Authentication request for Ethereum address ({})", request.getEthereumAddress());
         try {
             String ethereumAddress = request.getEthereumAddress();
             String message = request.getMessage();
@@ -60,7 +60,7 @@ public class AuthController {
             String token = jwtTokenProvider.generateToken(ethereumAddress, user.getRoles());
             userService.updateNonceByEthereumAddress(user.getEthereumAddress());
 
-            log.info("[AUTH CONTROLLER] Successful authentication for Ethereum address ({})", request.getEthereumAddress());
+            log.info("Successful authentication for Ethereum address ({})", request.getEthereumAddress());
             return new AuthenticationResponseDto(token, ethereumAddress);
         } catch (AuthenticationException | AccessDeniedException e) {
             throw new BadCredentialsException("Bad signature"); // TODO: 02.10.2021 Create custom exception
@@ -70,7 +70,7 @@ public class AuthController {
     @Operation(description = "Get nonce")
     @GetMapping(value = "/nonce", produces = MediaType.APPLICATION_JSON_VALUE)
     public GetNonceResponseDto nonce(@Valid @EthereumAddress @RequestParam("ethereumAddress") String ethereumAddress) {
-        log.info("[AUTH CONTROLLER] Nonce request for Ethereum address ({})", ethereumAddress);
+        log.info("Nonce request for Ethereum address ({})", ethereumAddress);
         UserDto user = userService.findByEthereumAddress(ethereumAddress);
         return new GetNonceResponseDto(user.getEthereumAddress(), user.getNonce());
     }

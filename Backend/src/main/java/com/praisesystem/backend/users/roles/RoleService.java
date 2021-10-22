@@ -8,5 +8,5 @@ import java.util.List;
 public interface RoleService {
     List<RoleEntity> findAll();
     RoleEntity findByCode(RoleCode code);
-    RoleEntity createByRoleCode(RoleCode code);
+    void createByRoleCode(RoleCode code);
 }
