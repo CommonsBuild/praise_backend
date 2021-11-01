@@ -12,4 +12,4 @@ Edit `/Backend/src/main/resources/application-local.yaml`
 `sudo ./gradlew bootRun --args='--spring.profiles.active=local'`
 
 - Backend runs at port 8088
-- Swagger API documentation at http://localhost:8088/swagger-ui
+- Swagger API documentation at http://localhost:8088/swagger-ui.html
