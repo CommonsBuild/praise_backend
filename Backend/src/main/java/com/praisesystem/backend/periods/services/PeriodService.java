@@ -18,4 +18,6 @@ public interface PeriodService {
     PeriodDto findLastPeriod();
 
     Period findLastPeriodEntity();
+
+    PeriodDto renamePeriod(Long id, String name);
 }

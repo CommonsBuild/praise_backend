@@ -1,6 +1,7 @@
 package com.praisesystem.backend.users.impl;
 
 import com.praisesystem.backend.common.exceptions.exceptiontypes.NotFoundObjectException;
+import com.praisesystem.backend.common.exceptions.exceptiontypes.ValidationException;
 import com.praisesystem.backend.configuration.properties.ApplicationProperties;
 import com.praisesystem.backend.users.dto.request.UserFilter;
 import com.praisesystem.backend.users.dto.response.UserDto;
@@ -13,7 +14,9 @@ import com.praisesystem.backend.users.roles.RoleService;
 import com.praisesystem.backend.users.roles.enums.RoleCode;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
 import com.praisesystem.backend.users.services.UserTransactionalService;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +35,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserTransactionalServiceImpl implements UserTransactionalService {
 
     ApplicationProperties properties;
@@ -118,9 +122,13 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
     @Override
     public UserDto addToQuantPool(Long userId) {
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new NotFoundObjectException("User not found"));
-        RoleEntity role = roleService.findByCode(RoleCode.ROLE_QUANTIFIER);
+        RoleEntity quantifierRole = roleService.findByCode(RoleCode.ROLE_QUANTIFIER);
 
-        user.getRoles().add(role);
+        if (user.getRoles().stream().anyMatch(role -> role.getCode().equals(RoleCode.ROLE_QUANTIFIER))) {
+            throw new ValidationException("User already in quantification pool");
+        }
+
+        user.addRole(quantifierRole);
         user = userRepository.save(user);
 
         return userMapper.toUserDto(user);

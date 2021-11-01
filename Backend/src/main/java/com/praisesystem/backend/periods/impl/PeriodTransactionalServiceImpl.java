@@ -4,13 +4,12 @@ import com.praisesystem.backend.common.exceptions.Precondition;
 import com.praisesystem.backend.common.exceptions.exceptiontypes.NotFoundObjectException;
 import com.praisesystem.backend.common.exceptions.exceptiontypes.ValidationException;
 import com.praisesystem.backend.periods.PeriodMapper;
-import com.praisesystem.backend.periods.repositories.PeriodRepository;
 import com.praisesystem.backend.periods.dto.request.CreatePeriodRequestDto;
 import com.praisesystem.backend.periods.dto.response.PeriodDto;
 import com.praisesystem.backend.periods.model.Period;
+import com.praisesystem.backend.periods.repositories.PeriodRepository;
 import com.praisesystem.backend.periods.repositories.PeriodUserRepository;
 import com.praisesystem.backend.periods.services.PeriodTransactionalService;
-import com.praisesystem.backend.users.model.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,6 +47,19 @@ public class PeriodTransactionalServiceImpl implements PeriodTransactionalServic
     @Override
     public Period findLastPeriodEntity() {
         return periodRepository.findFirstByOrderByIdDesc();
+    }
+
+    @Override
+    public PeriodDto renamePeriod(Long id, String name) {
+        Precondition.ifTrueThrow(id == null, new ValidationException("Id must be present"));
+        Precondition.ifTrueThrow(name == null || name.isBlank(), new ValidationException("Name must be present"));
+
+        Period period = periodRepository.findById(id).orElseThrow(() -> new NotFoundObjectException("Period not found"));
+
+        period.setName(name);
+        period = periodRepository.save(period);
+
+        return periodMapper.toPeriodDto(period);
     }
 
     @Override

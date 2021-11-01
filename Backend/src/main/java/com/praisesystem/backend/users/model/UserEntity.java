@@ -65,4 +65,8 @@ public class UserEntity extends BaseEntity {
         new SecureRandom().nextBytes(newNonce);
         nonce = Hex.encodeHexString(newNonce);
     }
+
+    public void addRole(RoleEntity role) {
+        this.getRoles().add(role);
+    }
 }

@@ -5,6 +5,7 @@ import com.praisesystem.backend.periods.dto.request.CreatePeriodRequestDto;
 import com.praisesystem.backend.periods.dto.response.PeriodDto;
 import com.praisesystem.backend.periods.services.PeriodService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
@@ -48,5 +49,18 @@ public class PeriodAdminController {
         Long adminId = AuthUtils.getCurrentUser().getId();
         log.info("A new request to create a period from a user with an ID ({})", adminId);
         return periodService.create(dto);
+    }
+
+    @PatchMapping(value = "/{periodId}/rename")
+    @Operation(description = "Rename period", security = @SecurityRequirement(name = "jwt"))
+    public PeriodDto renamePeriod(
+            @Parameter(description = "Period id", required = true)
+            @PathVariable("periodId") Long id,
+            @Parameter(description = "New period name", required = true)
+            @RequestParam("name") String name
+    ) {
+        Long adminId = AuthUtils.getCurrentUser().getId();
+        log.info("A new request to rename a period from a user with an ID ({})", adminId);
+        return periodService.renamePeriod(id, name);
     }
 }

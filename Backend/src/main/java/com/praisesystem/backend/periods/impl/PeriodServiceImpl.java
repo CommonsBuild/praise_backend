@@ -46,4 +46,9 @@ public class PeriodServiceImpl implements PeriodService {
     public Period findLastPeriodEntity() {
         return periodTransactionalService.findLastPeriodEntity();
     }
+
+    @Override
+    public PeriodDto renamePeriod(Long id, String name) {
+        return periodTransactionalService.renamePeriod(id, name);
+    }
 }
