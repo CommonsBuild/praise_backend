@@ -2,20 +2,29 @@ package com.praisesystem.backend.users.impl;
 
 import com.praisesystem.backend.common.exceptions.exceptiontypes.NotFoundObjectException;
 import com.praisesystem.backend.configuration.properties.ApplicationProperties;
-import com.praisesystem.backend.users.UserRepository;
-import com.praisesystem.backend.users.dto.UserDto;
+import com.praisesystem.backend.users.dto.request.UserFilter;
+import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.mapper.UserMapper;
 import com.praisesystem.backend.users.model.UserEntity;
+import com.praisesystem.backend.users.repositories.UserRepository;
+import com.praisesystem.backend.users.repositories.specifications.UserFilterSpecification;
+import com.praisesystem.backend.users.repositories.specifications.UserSearchForAddingQuantifierSpecification;
 import com.praisesystem.backend.users.roles.RoleService;
 import com.praisesystem.backend.users.roles.enums.RoleCode;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
 import com.praisesystem.backend.users.services.UserTransactionalService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -96,7 +105,30 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
     }
 
     @Override
-    public List<UserDto> findAll() {
-        return userRepository.findAll().stream().map(userMapper::toUserDto).collect(Collectors.toList());
+    public UserEntity findUserEntityById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundObjectException("User not found"));
+    }
+
+    @Override
+    public Page<UserDto> findByAddressOrDiscordTagOrTelegramHandle(String pattern, Pageable pageable) {
+        Specification<UserEntity> specification = new UserSearchForAddingQuantifierSpecification(pattern);
+        return userRepository.findAll(specification, pageable).map(userMapper::toUserDto);
+    }
+
+    @Override
+    public UserDto addToQuantPool(Long userId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new NotFoundObjectException("User not found"));
+        RoleEntity role = roleService.findByCode(RoleCode.ROLE_QUANTIFIER);
+
+        user.getRoles().add(role);
+        user = userRepository.save(user);
+
+        return userMapper.toUserDto(user);
+    }
+
+    @Override
+    public Page<UserDto> findAll(UserFilter filter, Pageable pageable) {
+        Specification<UserEntity> specification = new UserFilterSpecification(filter);
+        return userRepository.findAll(specification, pageable).map(userMapper::toUserDto);
     }
 }

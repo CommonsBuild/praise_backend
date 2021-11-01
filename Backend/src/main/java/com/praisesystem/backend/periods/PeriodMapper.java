@@ -2,9 +2,9 @@ package com.praisesystem.backend.periods;
 
 import com.praisesystem.backend.common.mappers.CommonMapper;
 import com.praisesystem.backend.common.mappers.support.CollectionSize;
-import com.praisesystem.backend.periods.dto.CreatePeriodRequestDto;
-import com.praisesystem.backend.periods.dto.PeriodDto;
-import com.praisesystem.backend.periods.model.PeriodEntity;
+import com.praisesystem.backend.periods.dto.request.CreatePeriodRequestDto;
+import com.praisesystem.backend.periods.dto.response.PeriodDto;
+import com.praisesystem.backend.periods.model.Period;
 import com.praisesystem.backend.users.mapper.UserMapper;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -26,8 +26,8 @@ public interface PeriodMapper {
     @Mapping(target = "quantifiedPraises", ignore = true)
     @Mapping(target = "name", source = "dto.name")
     @Mapping(target = "endDate", source = "dto.endDate")
-    PeriodEntity toNewPeriod(CreatePeriodRequestDto dto);
+    Period toNewPeriod(CreatePeriodRequestDto dto);
 
     @Mapping(target = "totalPraises", source = "praises", qualifiedBy = CollectionSize.class)
-    PeriodDto toPeriodDto(PeriodEntity newPeriod);
+    PeriodDto toPeriodDto(Period newPeriod);
 }

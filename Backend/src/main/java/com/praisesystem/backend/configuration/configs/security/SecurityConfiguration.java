@@ -87,6 +87,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 // allow for only admin
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .antMatchers("/api/period/**").permitAll()
+                .antMatchers("/api/praise/**").permitAll() // TODO: 25.10.2021 add cert auth
+                .antMatchers("/api/quantification/**").hasRole("QUANTIFIER")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));

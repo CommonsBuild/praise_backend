@@ -1,6 +1,6 @@
 package com.praisesystem.backend.configuration.configs.security.jwt;
 
-import com.praisesystem.backend.users.dto.UserDto;
+import com.praisesystem.backend.users.dto.response.UserDto;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

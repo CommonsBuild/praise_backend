@@ -1,7 +1,8 @@
 package com.praisesystem.backend.periods.impl;
 
-import com.praisesystem.backend.periods.dto.CreatePeriodRequestDto;
-import com.praisesystem.backend.periods.dto.PeriodDto;
+import com.praisesystem.backend.periods.dto.request.CreatePeriodRequestDto;
+import com.praisesystem.backend.periods.dto.response.PeriodDto;
+import com.praisesystem.backend.periods.model.Period;
 import com.praisesystem.backend.periods.services.PeriodService;
 import com.praisesystem.backend.periods.services.PeriodTransactionalService;
 import lombok.AccessLevel;
@@ -39,5 +40,10 @@ public class PeriodServiceImpl implements PeriodService {
     @Override
     public PeriodDto findLastPeriod() {
         return periodTransactionalService.findLastPeriod();
+    }
+
+    @Override
+    public Period findLastPeriodEntity() {
+        return periodTransactionalService.findLastPeriodEntity();
     }
 }

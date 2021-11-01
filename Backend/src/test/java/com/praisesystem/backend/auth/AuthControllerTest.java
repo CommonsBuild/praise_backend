@@ -2,7 +2,7 @@ package com.praisesystem.backend.auth;
 
 import com.praisesystem.backend.auth.dto.GetNonceResponseDto;
 import com.praisesystem.backend.configuration.configs.security.jwt.JwtTokenProvider;
-import com.praisesystem.backend.users.dto.UserDto;
+import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,12 +12,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 

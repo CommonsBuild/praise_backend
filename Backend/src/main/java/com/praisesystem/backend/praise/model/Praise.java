@@ -1,14 +1,16 @@
-package com.praisesystem.backend.praise;
+package com.praisesystem.backend.praise.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.praisesystem.backend.common.persistence.BaseEntity;
-import com.praisesystem.backend.periods.model.PeriodEntity;
+import com.praisesystem.backend.periods.model.Period;
+import com.praisesystem.backend.quantification.model.QuantifiedPraise;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Table(name = "praises")
@@ -23,13 +25,13 @@ public class Praise extends BaseEntity {
     @JoinColumn(name = "period_id")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    PeriodEntity period;
+    Period period;
 
     @JsonBackReference
     @OneToMany(mappedBy = "praise", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    List<QuantifiedPraise> quantifiedPraises;
+    Set<QuantifiedPraise> quantifiedPraises = new HashSet<>();
 
     @Column(name = "reason", columnDefinition = "text", nullable = false)
     String reason;

@@ -23,8 +23,6 @@ public class OpenApiConfiguration {
         OpenAPI openAPI = new OpenAPI()
                 .info(new Info().title("Praise System Backend"))
                 .components(new Components().addResponses("400", new ApiResponse().description("BAD REQUEST")));
-        // TODO: 05.10.2021 create Pageable substitution
         return openAPI;
     }
-
 }

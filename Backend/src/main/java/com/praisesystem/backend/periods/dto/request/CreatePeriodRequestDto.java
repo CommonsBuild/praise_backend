@@ -1,4 +1,4 @@
-package com.praisesystem.backend.periods.dto;
+package com.praisesystem.backend.periods.dto.request;
 
 import com.praisesystem.backend.common.validators.PeriodEndDate;
 import io.swagger.v3.oas.annotations.media.Schema;

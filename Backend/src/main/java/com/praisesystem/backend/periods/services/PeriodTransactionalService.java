@@ -1,7 +1,8 @@
 package com.praisesystem.backend.periods.services;
 
-import com.praisesystem.backend.periods.dto.CreatePeriodRequestDto;
-import com.praisesystem.backend.periods.dto.PeriodDto;
+import com.praisesystem.backend.periods.dto.request.CreatePeriodRequestDto;
+import com.praisesystem.backend.periods.dto.response.PeriodDto;
+import com.praisesystem.backend.periods.model.Period;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,4 +17,5 @@ public interface PeriodTransactionalService {
 
     PeriodDto findLastPeriod();
 
+    Period findLastPeriodEntity();
 }

@@ -31,7 +31,8 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.2.24'
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
     implementation 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.5.10'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.5.12'
+    implementation 'org.springdoc:springdoc-openapi-data-rest:1.5.12'
 
 
 
@@ -40,7 +41,9 @@ dependencies {
 //    runtimeOnly 'com.h2database:h2:1.4.200'
 
     compileOnly 'org.projectlombok:lombok'
-    
+    compileOnly 'org.hibernate:hibernate-jpamodelgen:5.4.30.Final'
+
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:5.4.30.Final'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'

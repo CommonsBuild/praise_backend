@@ -4,8 +4,6 @@ server:
 
 # --------------------------------------- SPRING PROPERTIES ---------------------------------------
 spring:
-  #  profiles:
-  #    active: @activatedProperties@
   # ------------------------------------- DATASOURCE PROPERTIES -------------------------------------
   config:
     import:
@@ -33,10 +31,14 @@ praise-system:
 jwt:
   token:
     secret: somesecret
-    expirationTimeMS: 86400000
+    expirationTimeMS: 2629800000
 # ------------------------------------ RATE-LIMIT PROPERTIES --------------------------------------
-
-
+springdoc:
+  swagger-ui:
+    operationsSorter: alpha
+  model-converters:
+    pageable-converter:
+      enabled: true
 bucket4j:
   enabled: true
   filters:

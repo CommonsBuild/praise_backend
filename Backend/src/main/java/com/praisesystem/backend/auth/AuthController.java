@@ -5,7 +5,7 @@ import com.praisesystem.backend.auth.dto.AuthenticationResponseDto;
 import com.praisesystem.backend.auth.dto.GetNonceResponseDto;
 import com.praisesystem.backend.common.validators.EthereumAddress;
 import com.praisesystem.backend.configuration.configs.security.jwt.JwtTokenProvider;
-import com.praisesystem.backend.users.dto.UserDto;
+import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

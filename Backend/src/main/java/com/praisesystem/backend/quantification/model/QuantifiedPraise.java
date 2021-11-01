@@ -1,29 +1,39 @@
-package com.praisesystem.backend.praise;
+package com.praisesystem.backend.quantification.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.praisesystem.backend.common.persistence.BaseEntity;
-import com.praisesystem.backend.periods.model.PeriodEntity;
+import com.praisesystem.backend.periods.model.Period;
+import com.praisesystem.backend.praise.model.Praise;
 import com.praisesystem.backend.users.model.UserEntity;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-@Data
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class QuantifiedPraise extends BaseEntity {
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "period_id", nullable = false)
-    PeriodEntity period;
+    Period period;
 
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "praise_id", nullable = false)
     Praise praise;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "quantifier_id", nullable = false)
     UserEntity quantifier;
 

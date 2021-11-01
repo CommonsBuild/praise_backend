@@ -3,7 +3,7 @@ package com.praisesystem.backend.users.mapper;
 import com.praisesystem.backend.users.roles.mapper.RoleMapper;
 import com.praisesystem.backend.users.roles.mapper.support.RolesToStringList;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
-import com.praisesystem.backend.users.dto.UserDto;
+import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.model.UserEntity;
 import org.mapstruct.*;
 

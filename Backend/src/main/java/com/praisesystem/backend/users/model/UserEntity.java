@@ -1,8 +1,9 @@
 package com.praisesystem.backend.users.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.praisesystem.backend.common.persistence.BaseEntity;
-import com.praisesystem.backend.periods.model.PeriodEntity;
+import com.praisesystem.backend.periods.model.Period;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -25,6 +26,18 @@ public class UserEntity extends BaseEntity {
     @Column(name = "ethereum_address", unique = true, nullable = false)
     String ethereumAddress;
 
+    @Column(name = "discord_id", unique = true)
+    String discordId;
+
+    @Column(name = "discord_tag", unique = true)
+    String discordTag;
+
+    @Column(name = "telegram_id", unique = true)
+    String telegramId;
+
+    @Column(name = "telegram_handle", unique = true)
+    String telegramHandle;
+
     @Column(name = "nonce", nullable = false)
     String nonce;
 
@@ -37,7 +50,11 @@ public class UserEntity extends BaseEntity {
 
     @JsonManagedReference
     @ManyToMany(mappedBy = "quantifiers", fetch = FetchType.LAZY)
-    Set<PeriodEntity> quantificationPools = new HashSet<>();
+    Set<Period> quantificationPools = new HashSet<>();
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    Set<Score> scoreStats;
 
     public UserEntity(String ethereumAddress) {
         this.ethereumAddress = ethereumAddress;

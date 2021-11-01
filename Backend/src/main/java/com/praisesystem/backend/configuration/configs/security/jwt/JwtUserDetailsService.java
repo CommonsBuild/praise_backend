@@ -1,8 +1,7 @@
 package com.praisesystem.backend.configuration.configs.security.jwt;
 
-import com.praisesystem.backend.users.dto.UserDto;
+import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.services.UserService;
-import com.praisesystem.backend.users.model.UserEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;

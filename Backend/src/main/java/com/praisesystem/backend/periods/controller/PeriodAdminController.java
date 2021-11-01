@@ -1,8 +1,8 @@
 package com.praisesystem.backend.periods.controller;
 
 import com.praisesystem.backend.auth.AuthUtils;
-import com.praisesystem.backend.periods.dto.CreatePeriodRequestDto;
-import com.praisesystem.backend.periods.dto.PeriodDto;
+import com.praisesystem.backend.periods.dto.request.CreatePeriodRequestDto;
+import com.praisesystem.backend.periods.dto.response.PeriodDto;
 import com.praisesystem.backend.periods.services.PeriodService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -29,24 +29,24 @@ public class PeriodAdminController {
     @GetMapping(value = "/all")
     @Operation(description = "Find all periods", security = @SecurityRequirement(name = "jwt"))
     public List<PeriodDto> findAll() {
-        Long userId = AuthUtils.getCurrentUser().getId();
-        log.info("Request to search for the all periods from user with ID ({})", userId);
+        Long adminId = AuthUtils.getCurrentUser().getId();
+        log.info("Request to search for the all periods from user with ID ({})", adminId);
         return periodService.findAllPeriods();
     }
 
     @GetMapping(value = "/current")
     @Operation(description = "Find last period", security = @SecurityRequirement(name = "jwt"))
     public PeriodDto findLastPeriod() {
-        Long userId = AuthUtils.getCurrentUser().getId();
-        log.info("Request to search for the last period from user with ID ({})", userId);
+        Long adminId = AuthUtils.getCurrentUser().getId();
+        log.info("Request to search for the last period from user with ID ({})", adminId);
         return periodService.findLastPeriod();
     }
 
     @PostMapping(value = "/create")
     @Operation(description = "Create new period", security = @SecurityRequirement(name = "jwt"))
     public PeriodDto createPeriod(@Valid @RequestBody CreatePeriodRequestDto dto) {
-        Long userId = AuthUtils.getCurrentUser().getId();
-        log.info("A new request to create a period from a user with an ID ({})", userId);
+        Long adminId = AuthUtils.getCurrentUser().getId();
+        log.info("A new request to create a period from a user with an ID ({})", adminId);
         return periodService.create(dto);
     }
 }

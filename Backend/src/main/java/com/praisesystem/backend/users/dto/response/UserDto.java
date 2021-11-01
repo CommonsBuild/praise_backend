@@ -1,4 +1,4 @@
-package com.praisesystem.backend.users.dto;
+package com.praisesystem.backend.users.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,6 +9,7 @@ import java.util.List;
 @Value
 @Schema(description = "User response object")
 public class UserDto {
+
     @Schema(description = "User ID")
     Long id;
 
