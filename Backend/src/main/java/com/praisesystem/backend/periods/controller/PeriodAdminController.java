@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,32 +28,32 @@ public class PeriodAdminController {
 
     PeriodService periodService;
 
-    @GetMapping(value = "/all")
     @Operation(description = "Find all periods", security = @SecurityRequirement(name = "jwt"))
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PeriodDto> findAll() {
         Long adminId = AuthUtils.getCurrentUser().getId();
         log.info("Request to search for the all periods from user with ID ({})", adminId);
         return periodService.findAllPeriods();
     }
 
-    @GetMapping(value = "/current")
     @Operation(description = "Find last period", security = @SecurityRequirement(name = "jwt"))
+    @GetMapping(value = "/current", produces = MediaType.APPLICATION_JSON_VALUE)
     public PeriodDto findLastPeriod() {
         Long adminId = AuthUtils.getCurrentUser().getId();
         log.info("Request to search for the last period from user with ID ({})", adminId);
         return periodService.findLastPeriod();
     }
 
-    @PostMapping(value = "/create")
     @Operation(description = "Create new period", security = @SecurityRequirement(name = "jwt"))
+    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public PeriodDto createPeriod(@Valid @RequestBody CreatePeriodRequestDto dto) {
         Long adminId = AuthUtils.getCurrentUser().getId();
         log.info("A new request to create a period from a user with an ID ({})", adminId);
         return periodService.create(dto);
     }
 
-    @PatchMapping(value = "/{periodId}/rename")
     @Operation(description = "Rename period", security = @SecurityRequirement(name = "jwt"))
+    @PatchMapping(value = "/{periodId}/rename", produces = MediaType.APPLICATION_JSON_VALUE)
     public PeriodDto renamePeriod(
             @Parameter(description = "Period id", required = true)
             @PathVariable("periodId") Long id,

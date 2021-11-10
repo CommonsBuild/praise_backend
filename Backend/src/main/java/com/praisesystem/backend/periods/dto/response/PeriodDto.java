@@ -1,6 +1,5 @@
 package com.praisesystem.backend.periods.dto.response;
 
-import com.praisesystem.backend.users.dto.response.UserDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,7 +24,4 @@ public class PeriodDto {
 
     @Schema(description = "Total number of praises")
     Long totalPraises;
-
-    @Schema(description = "Quantifiers list")
-    List<UserDto> quantifiers;
 }

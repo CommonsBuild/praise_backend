@@ -1,13 +1,9 @@
 package com.praisesystem.backend.users.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.praisesystem.backend.accounts.model.Account;
 import com.praisesystem.backend.common.persistence.BaseEntity;
-import com.praisesystem.backend.periods.model.Period;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.codec.binary.Hex;
 
@@ -16,9 +12,11 @@ import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEntity extends BaseEntity {
@@ -26,33 +24,20 @@ public class UserEntity extends BaseEntity {
     @Column(name = "ethereum_address", unique = true, nullable = false)
     String ethereumAddress;
 
-    @Column(name = "discord_id", unique = true)
-    String discordId;
-
-    @Column(name = "discord_tag", unique = true)
-    String discordTag;
-
-    @Column(name = "telegram_id", unique = true)
-    String telegramId;
-
-    @Column(name = "telegram_handle", unique = true)
-    String telegramHandle;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    Set<Account> accounts;
 
     @Column(name = "nonce", nullable = false)
     String nonce;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     Set<RoleEntity> roles = new HashSet<>();
 
-    @JsonManagedReference
-    @ManyToMany(mappedBy = "quantifiers", fetch = FetchType.LAZY)
-    Set<Period> quantificationPools = new HashSet<>();
-
-    @JsonBackReference
+//    @JsonBackReference
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     Set<Score> scoreStats;
 

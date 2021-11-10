@@ -85,7 +85,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 // allow for only admin
-                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+//                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                .antMatchers(ADMIN_ENDPOINT).permitAll()
                 .antMatchers("/api/period/**").permitAll()
                 .antMatchers("/api/praise/**").permitAll() // TODO: 25.10.2021 add cert auth
                 .antMatchers("/api/quantification/**").hasRole("QUANTIFIER")

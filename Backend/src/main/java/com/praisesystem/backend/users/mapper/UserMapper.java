@@ -1,5 +1,6 @@
 package com.praisesystem.backend.users.mapper;
 
+import com.praisesystem.backend.accounts.mapper.AccountMapper;
 import com.praisesystem.backend.users.roles.mapper.RoleMapper;
 import com.praisesystem.backend.users.roles.mapper.support.RolesToStringList;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
@@ -13,7 +14,7 @@ import java.util.List;
         componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.ERROR,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        uses = {RoleMapper.class}
+        uses = {RoleMapper.class, AccountMapper.class}
 )
 public interface UserMapper {
 

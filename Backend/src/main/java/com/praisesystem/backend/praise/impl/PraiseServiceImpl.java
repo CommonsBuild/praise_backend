@@ -1,7 +1,7 @@
 package com.praisesystem.backend.praise.impl;
 
-import com.praisesystem.backend.praise.dto.CreateTelegramPraiseDto;
-import com.praisesystem.backend.praise.dto.TelegramPraiseDto;
+import com.praisesystem.backend.praise.dto.CreatePraiseDto;
+import com.praisesystem.backend.praise.model.Praise;
 import com.praisesystem.backend.praise.services.PraiseService;
 import com.praisesystem.backend.praise.services.PraiseTransactionalService;
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ public class PraiseServiceImpl implements PraiseService {
     PraiseTransactionalService praiseTransactionalService;
 
     @Override
-    public List<TelegramPraiseDto> createTelegramPraise(CreateTelegramPraiseDto dto) {
-        return praiseTransactionalService.createTelegramPraise(dto);
+    public List<Praise> createPraise(CreatePraiseDto dto) {
+        return praiseTransactionalService.createPraise(dto);
     }
 }

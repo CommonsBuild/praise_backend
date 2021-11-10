@@ -21,7 +21,6 @@ public interface PeriodMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "quantifiers", ignore = true)
     @Mapping(target = "praises", ignore = true)
     @Mapping(target = "quantifiedPraises", ignore = true)
     @Mapping(target = "name", source = "dto.name")

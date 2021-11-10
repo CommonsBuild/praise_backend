@@ -1,10 +1,11 @@
 package com.praisesystem.backend.praise.impl;
 
+import com.praisesystem.backend.accounts.AccountService;
+import com.praisesystem.backend.accounts.model.Account;
 import com.praisesystem.backend.periods.model.Period;
 import com.praisesystem.backend.periods.services.PeriodService;
 import com.praisesystem.backend.praise.PraiseRepository;
-import com.praisesystem.backend.praise.dto.CreateTelegramPraiseDto;
-import com.praisesystem.backend.praise.dto.TelegramPraiseDto;
+import com.praisesystem.backend.praise.dto.CreatePraiseDto;
 import com.praisesystem.backend.praise.mapper.PraiseMapper;
 import com.praisesystem.backend.praise.model.Praise;
 import com.praisesystem.backend.praise.services.PraiseTransactionalService;
@@ -28,14 +29,22 @@ public class PraiseTransactionalServiceImpl implements PraiseTransactionalServic
     PraiseRepository praiseRepository;
     PraiseMapper praiseMapper;
     PeriodService periodService;
+    AccountService accountService;
 
     @Override
-    public List<TelegramPraiseDto> createTelegramPraise(CreateTelegramPraiseDto dto) {
+    public List<Praise> createPraise(CreatePraiseDto dto) {
+        // find last period
         Period period = periodService.findLastPeriodEntity();
-        List<Praise> praises = dto.getRecipientIds()
+
+        Account giver = accountService.createOrUpdateAccount(dto.getGiver());
+        List<Account> recipients = accountService.createOrUpdateAccounts(dto.getRecipients());
+
+        // Create praise object for each recipient
+        List<Praise> praises = recipients
                 .stream()
-                .map(id -> praiseMapper.toNewTelegramPraise(id, dto, period))
+                .map(recipient -> praiseMapper.toNewPraise(giver, recipient, dto, period))
                 .collect(Collectors.toList());
-        return praiseRepository.saveAll(praises).stream().map(praiseMapper::toTelegramPraiseDto).collect(Collectors.toList());
+
+        return praiseRepository.saveAll(praises);
     }
 }

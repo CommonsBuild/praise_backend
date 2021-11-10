@@ -1,6 +1,5 @@
 package com.praisesystem.backend.users.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.praisesystem.backend.common.persistence.BaseEntity;
 import com.praisesystem.backend.periods.model.Period;
 import lombok.*;
@@ -16,7 +15,7 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Score extends BaseEntity {
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     UserEntity user;

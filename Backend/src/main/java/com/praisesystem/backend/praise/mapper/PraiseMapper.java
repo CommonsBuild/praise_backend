@@ -1,8 +1,8 @@
 package com.praisesystem.backend.praise.mapper;
 
+import com.praisesystem.backend.accounts.model.Account;
 import com.praisesystem.backend.periods.model.Period;
-import com.praisesystem.backend.praise.dto.CreateTelegramPraiseDto;
-import com.praisesystem.backend.praise.dto.TelegramPraiseDto;
+import com.praisesystem.backend.praise.dto.CreatePraiseDto;
 import com.praisesystem.backend.praise.model.Praise;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -21,16 +21,9 @@ public interface PraiseMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "quantifiedPraises", ignore = true)
-    @Mapping(target = "discordChannelName", ignore = true)
-    @Mapping(target = "giverDiscordTag", ignore = true)
-    @Mapping(target = "recipientDiscordTag", ignore = true)
-    @Mapping(source = "period", target = "period")
-    @Mapping(source = "dto.giverId", target = "giverTelegramId")
-    @Mapping(source = "recipientId", target = "recipientTelegramId")
-    @Mapping(source = "dto.channelId", target = "telegramChannelId")
-    @Mapping(source = "dto.praiseReason", target = "reason")
-    Praise toNewTelegramPraise(String recipientId, CreateTelegramPraiseDto dto, Period period);
-
-    @Mapping(source = "period.id", target = "periodId")
-    TelegramPraiseDto toTelegramPraiseDto(Praise praise);
+    @Mapping(target = "period", source = "period")
+    @Mapping(target = "reason", source = "dto.praiseReason")
+    @Mapping(target = "giver", source = "giver")
+    @Mapping(target = "recipient", source = "recipient")
+    Praise toNewPraise(Account giver, Account recipient, CreatePraiseDto dto, Period period);
 }
