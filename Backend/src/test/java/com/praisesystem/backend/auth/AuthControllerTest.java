@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,6 +49,7 @@ class AuthControllerTest {
                 0L,
                 "0x123",
                 List.of("123"),
+                Collections.emptyList(),
                 "123"
         );
 

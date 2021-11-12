@@ -26,7 +26,7 @@ public class AccountTransactionalServiceImpl implements AccountTransactionalServ
     AccountMapper accountMapper;
 
     public Account createOrUpdateAccount(AccountDto dto) {
-        Account account = accountRepository.findByAccountIdAndPlatform(dto.getAccountId(), dto.getPlatform());
+        Account account = accountRepository.findByIdAndPlatform(dto.getId(), dto.getPlatform());
 
         account = account == null ? accountMapper.toNewAccount(dto) : accountMapper.updateAccount(account, dto);
 
@@ -34,18 +34,18 @@ public class AccountTransactionalServiceImpl implements AccountTransactionalServ
     }
 
     @Override
-    public List<Account> createOrUpdateAccounts(List<AccountDto> dtos) {
-        List<String> ids = dtos.stream().map(AccountDto::getAccountId).collect(Collectors.toList());
-        PlatformType platformType = dtos.get(0).getPlatform();
+    public List<Account> createOrUpdateAccounts(List<AccountDto> dtoList) {
+        List<String> ids = dtoList.stream().map(AccountDto::getId).collect(Collectors.toList());
+        PlatformType platformType = dtoList.get(0).getPlatform();
 
-        Map<String, Account> existingAccounts = accountRepository.findByAccountIdInAndPlatform(ids, platformType)
+        Map<String, Account> existingAccounts = accountRepository.findByIdInAndPlatform(ids, platformType)
                 .stream()
-                .collect(Collectors.toMap(Account::getAccountId, a -> a));
+                .collect(Collectors.toMap(Account::getId, a -> a));
 
-        List<Account> accounts = dtos.stream()
+        List<Account> accounts = dtoList.stream()
                 .map(dto -> {
-                    if (existingAccounts.containsKey(dto.getAccountId())) {
-                        return accountMapper.updateAccount(existingAccounts.get(dto.getAccountId()), dto);
+                    if (existingAccounts.containsKey(dto.getId())) {
+                        return accountMapper.updateAccount(existingAccounts.get(dto.getId()), dto);
                     }
                     return accountMapper.toNewAccount(dto);
                 }).collect(Collectors.toList());

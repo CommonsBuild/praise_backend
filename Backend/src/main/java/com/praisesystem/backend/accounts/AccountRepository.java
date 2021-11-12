@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long>, JpaSpecificationExecutor<Account> {
-    Account findByAccountIdAndPlatform(String accountId, PlatformType type);
-    List<Account> findByAccountIdInAndPlatform(Collection<String> ids, PlatformType type);
+    Account findByIdAndPlatform(String accountId, PlatformType type);
+    List<Account> findByIdInAndPlatform(Collection<String> ids, PlatformType type);
 }

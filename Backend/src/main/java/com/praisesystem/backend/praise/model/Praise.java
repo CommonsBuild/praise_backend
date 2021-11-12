@@ -4,6 +4,7 @@ import com.praisesystem.backend.accounts.model.Account;
 import com.praisesystem.backend.common.persistence.BaseEntity;
 import com.praisesystem.backend.periods.model.Period;
 import com.praisesystem.backend.quantification.model.QuantifiedPraise;
+import com.praisesystem.backend.source.model.Source;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -35,10 +36,16 @@ public class Praise extends BaseEntity {
     String reason;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "giver_id")
+    @JoinColumn(name = "giver_id", nullable = false)
+    @EqualsAndHashCode.Exclude
     Account giver;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "recipient_id")
+    @JoinColumn(name = "recipient_id", nullable = false)
+    @EqualsAndHashCode.Exclude
     Account recipient;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "source_id", nullable = false)
+    Source source;
 }

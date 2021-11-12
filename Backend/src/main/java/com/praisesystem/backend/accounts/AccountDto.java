@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 public class AccountDto {
-    String accountId;
+    String id;
     String username;
     String profileImageURL;
     PlatformType platform;

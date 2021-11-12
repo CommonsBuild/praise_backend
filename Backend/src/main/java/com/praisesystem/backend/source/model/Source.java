@@ -1,7 +1,6 @@
-package com.praisesystem.backend.accounts.model;
+package com.praisesystem.backend.source.model;
 
 import com.praisesystem.backend.accounts.enums.PlatformType;
-import com.praisesystem.backend.users.model.UserEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,31 +9,30 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Table(name = "accounts")
+@Table(name = "sources")
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Account {
+public class Source {
 
     @Id
     String id;
 
-    @Column(name = "username")
-    String username;
+    @Column(name = "name", nullable = false)
+    String name;
 
-    @Column(name = "profile_image_url", columnDefinition = "text")
-    String profileImageURL;
+    @Column(name = "channel_id")
+    String channelId;
+
+    @Column(name = "channel_name")
+    String channelName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "platform", nullable = false)
+    @Column(name = "platform")
     PlatformType platform;
-
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    UserEntity user;
 
     @CreationTimestamp
     @Column(name = "created_at", columnDefinition = "timestamp")

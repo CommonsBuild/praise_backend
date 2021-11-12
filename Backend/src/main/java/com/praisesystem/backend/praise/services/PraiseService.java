@@ -6,10 +6,13 @@ import com.praisesystem.backend.praise.model.Praise;
 import java.util.List;
 
 public interface PraiseService {
+
+    Praise findById(Long id);
+
     /**
-     * Create praise from telegram
-     * @param dto CreateTelegramPraise Object
-     * @return List of new Praises
+     * Create praise
+     * @param dto CreatePraise Object
+     * @return List of created Praises
      */
     List<Praise> createPraise(CreatePraiseDto dto);
 }

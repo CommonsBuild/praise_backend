@@ -21,6 +21,11 @@ public class PraiseServiceImpl implements PraiseService {
     PraiseTransactionalService praiseTransactionalService;
 
     @Override
+    public Praise findById(Long id) {
+        return praiseTransactionalService.findById(id);
+    }
+
+    @Override
     public List<Praise> createPraise(CreatePraiseDto dto) {
         return praiseTransactionalService.createPraise(dto);
     }
