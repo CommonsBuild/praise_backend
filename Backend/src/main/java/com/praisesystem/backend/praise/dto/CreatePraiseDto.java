@@ -1,7 +1,7 @@
 package com.praisesystem.backend.praise.dto;
 
-import com.praisesystem.backend.accounts.AccountDto;
-import com.praisesystem.backend.source.SourceDto;
+import com.praisesystem.backend.accounts.dto.AccountDto;
+import com.praisesystem.backend.source.dto.SourceDto;
 import lombok.Value;
 
 import java.util.List;

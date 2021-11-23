@@ -1,6 +1,6 @@
 package com.praisesystem.backend.accounts.mapper;
 
-import com.praisesystem.backend.accounts.AccountDto;
+import com.praisesystem.backend.accounts.dto.AccountDto;
 import com.praisesystem.backend.accounts.model.Account;
 import org.mapstruct.*;
 

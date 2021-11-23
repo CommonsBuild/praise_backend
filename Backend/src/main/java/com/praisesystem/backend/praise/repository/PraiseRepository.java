@@ -1,4 +1,4 @@
-package com.praisesystem.backend.praise;
+package com.praisesystem.backend.praise.repository;
 
 import com.praisesystem.backend.praise.model.Praise;
 import org.springframework.data.jpa.repository.JpaRepository;

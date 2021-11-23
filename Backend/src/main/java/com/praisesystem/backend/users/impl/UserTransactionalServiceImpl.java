@@ -120,15 +120,26 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
     }
 
     @Override
-    public UserDto addToQuantPool(Long userId) {
+    public UserDto addRole(Long userId, RoleCode code) {
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new NotFoundObjectException("User not found"));
-        RoleEntity quantifierRole = roleService.findByCode(RoleCode.ROLE_QUANTIFIER);
+        RoleEntity newRole = roleService.findByCode(code);
 
-        if (user.getRoles().stream().anyMatch(role -> role.getCode().equals(RoleCode.ROLE_QUANTIFIER))) {
-            throw new ValidationException("User already in quantification pool");
+        if (!user.addRole(newRole)) {
+            throw new ValidationException("User already has this role");
         }
 
-        user.addRole(quantifierRole);
+        user = userRepository.save(user);
+
+        return userMapper.toUserDto(user);
+    }
+
+    @Override
+    public UserDto removeRole(Long userId, RoleCode code) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new NotFoundObjectException("User not found"));
+
+        if (!user.removeRole(code)) {
+            throw new ValidationException("User hasn't this role");
+        }
         user = userRepository.save(user);
 
         return userMapper.toUserDto(user);

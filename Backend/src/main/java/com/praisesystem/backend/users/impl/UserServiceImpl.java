@@ -3,6 +3,7 @@ package com.praisesystem.backend.users.impl;
 import com.praisesystem.backend.users.dto.request.UserFilter;
 import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.model.UserEntity;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
 import com.praisesystem.backend.users.services.UserService;
 import com.praisesystem.backend.users.services.UserTransactionalService;
 import lombok.AccessLevel;
@@ -69,7 +70,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto addToQuantPool(Long userId) {
-        return userTransactionalService.addToQuantPool(userId);
+    public UserDto addRole(Long userId, RoleCode code) {
+        return userTransactionalService.addRole(userId, code);
+    }
+
+    @Override
+    public UserDto removeRole(Long userId, RoleCode code) {
+        return userTransactionalService.removeRole(userId, code);
     }
 }

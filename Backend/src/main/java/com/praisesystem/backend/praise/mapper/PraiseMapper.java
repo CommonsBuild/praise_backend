@@ -2,6 +2,8 @@ package com.praisesystem.backend.praise.mapper;
 
 import com.praisesystem.backend.accounts.mapper.AccountMapper;
 import com.praisesystem.backend.accounts.model.Account;
+import com.praisesystem.backend.quantification.mapper.QuantifiedPraiseMapper;
+import com.praisesystem.backend.quantification.mapper.support.QuantifiedPraiseIds;
 import com.praisesystem.backend.periods.model.Period;
 import com.praisesystem.backend.praise.dto.PraiseDto;
 import com.praisesystem.backend.praise.model.Praise;
@@ -16,7 +18,7 @@ import org.mapstruct.ReportingPolicy;
         componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.ERROR,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        uses = {AccountMapper.class, SourceMapper.class}
+        uses = {AccountMapper.class, SourceMapper.class, QuantifiedPraiseMapper.class}
 )
 public interface PraiseMapper {
 
@@ -31,5 +33,7 @@ public interface PraiseMapper {
     @Mapping(target = "source", source = "source")
     Praise toNewPraise(Account giver, Account recipient, Source source, Period period, String reason);
 
+    @Mapping(target = "periodId", source = "period.id")
+    @Mapping(target = "quantifiedPraises", source = "quantifiedPraises", qualifiedBy = QuantifiedPraiseIds.class)
     PraiseDto toPraiseDto(Praise praise);
 }

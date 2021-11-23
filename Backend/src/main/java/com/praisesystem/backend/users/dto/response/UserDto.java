@@ -1,7 +1,7 @@
 package com.praisesystem.backend.users.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.praisesystem.backend.accounts.AccountDto;
+import com.praisesystem.backend.accounts.dto.AccountDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Value;
 
@@ -14,7 +14,7 @@ public class UserDto {
     @Schema(description = "User ID")
     Long id;
 
-    @JsonIgnore
+    @Schema(description = "Ethereum address")
     String ethereumAddress;
 
     @Schema(description = "List of user roles")

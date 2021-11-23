@@ -1,8 +1,8 @@
 package com.praisesystem.backend.accounts.impl;
 
-import com.praisesystem.backend.accounts.AccountDto;
-import com.praisesystem.backend.accounts.AccountService;
-import com.praisesystem.backend.accounts.AccountTransactionalService;
+import com.praisesystem.backend.accounts.dto.AccountDto;
+import com.praisesystem.backend.accounts.services.AccountService;
+import com.praisesystem.backend.accounts.services.AccountTransactionalService;
 import com.praisesystem.backend.accounts.model.Account;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Slf4j

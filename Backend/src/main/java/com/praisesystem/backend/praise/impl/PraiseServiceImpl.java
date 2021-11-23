@@ -1,6 +1,7 @@
 package com.praisesystem.backend.praise.impl;
 
 import com.praisesystem.backend.praise.dto.CreatePraiseDto;
+import com.praisesystem.backend.praise.dto.PraiseDto;
 import com.praisesystem.backend.praise.model.Praise;
 import com.praisesystem.backend.praise.services.PraiseService;
 import com.praisesystem.backend.praise.services.PraiseTransactionalService;
@@ -26,7 +27,7 @@ public class PraiseServiceImpl implements PraiseService {
     }
 
     @Override
-    public List<Praise> createPraise(CreatePraiseDto dto) {
+    public List<PraiseDto> createPraise(CreatePraiseDto dto) {
         return praiseTransactionalService.createPraise(dto);
     }
 }

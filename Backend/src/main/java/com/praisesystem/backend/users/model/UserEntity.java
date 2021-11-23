@@ -2,6 +2,7 @@ package com.praisesystem.backend.users.model;
 
 import com.praisesystem.backend.accounts.model.Account;
 import com.praisesystem.backend.common.persistence.BaseEntity;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -51,7 +52,11 @@ public class UserEntity extends BaseEntity {
         nonce = Hex.encodeHexString(newNonce);
     }
 
-    public void addRole(RoleEntity role) {
-        this.getRoles().add(role);
+    public boolean addRole(RoleEntity role) {
+        return this.getRoles().add(role);
+    }
+
+    public boolean removeRole(RoleCode code) {
+        return this.getRoles().removeIf(role -> role.getCode().equals(code));
     }
 }

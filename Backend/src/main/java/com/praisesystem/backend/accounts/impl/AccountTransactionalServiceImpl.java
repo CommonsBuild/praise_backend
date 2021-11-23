@@ -1,8 +1,8 @@
 package com.praisesystem.backend.accounts.impl;
 
-import com.praisesystem.backend.accounts.AccountDto;
+import com.praisesystem.backend.accounts.dto.AccountDto;
 import com.praisesystem.backend.accounts.AccountRepository;
-import com.praisesystem.backend.accounts.AccountTransactionalService;
+import com.praisesystem.backend.accounts.services.AccountTransactionalService;
 import com.praisesystem.backend.accounts.enums.PlatformType;
 import com.praisesystem.backend.accounts.mapper.AccountMapper;
 import com.praisesystem.backend.accounts.model.Account;

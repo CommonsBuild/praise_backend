@@ -1,9 +1,7 @@
 package com.praisesystem.backend.periods.enums;
 
 public enum PeriodStatus {
-    CREATED,
-    IN_PROGRESS,
+    OPEN,
     QUANTIFICATION,
-    FINISHED,
-    ARCHIVED
+    CLOSED
 }

@@ -1,4 +1,4 @@
-package com.praisesystem.backend.accounts;
+package com.praisesystem.backend.accounts.dto;
 
 import com.praisesystem.backend.accounts.enums.PlatformType;
 import lombok.Value;

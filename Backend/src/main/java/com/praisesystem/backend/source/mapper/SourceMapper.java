@@ -1,6 +1,6 @@
 package com.praisesystem.backend.source.mapper;
 
-import com.praisesystem.backend.source.SourceDto;
+import com.praisesystem.backend.source.dto.SourceDto;
 import com.praisesystem.backend.source.model.Source;
 import org.mapstruct.*;
 

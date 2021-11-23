@@ -1,4 +1,4 @@
-package com.praisesystem.backend.source;
+package com.praisesystem.backend.source.dto;
 
 import com.praisesystem.backend.accounts.enums.PlatformType;
 import io.swagger.v3.oas.annotations.media.Schema;

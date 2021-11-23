@@ -23,6 +23,7 @@ public interface PeriodMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "praises", ignore = true)
     @Mapping(target = "quantifiedPraises", ignore = true)
+    @Mapping(target = "status", ignore = true)
     @Mapping(target = "name", source = "dto.name")
     @Mapping(target = "endDate", source = "dto.endDate")
     Period toNewPeriod(CreatePeriodRequestDto dto);

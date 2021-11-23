@@ -1,7 +1,9 @@
 package com.praisesystem.backend.users.controller;
 
+import com.praisesystem.backend.auth.AuthUtils;
 import com.praisesystem.backend.users.dto.request.UserFilter;
 import com.praisesystem.backend.users.dto.response.UserDto;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
 import com.praisesystem.backend.users.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -50,9 +52,19 @@ public class UserAdminController {
         return userService.findUserDtoById(id);
     }
 
-    @Operation(description = "Add user to quantifiers pool", security = @SecurityRequirement(name = "jwt"))
-    @GetMapping(value = "/addToQuantPool", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDto addToQuantPool(@RequestParam("userId") Long userId) {
-        return userService.addToQuantPool(userId);
+    @Operation(description = "Add role to user", security = @SecurityRequirement(name = "jwt"))
+    @PatchMapping(value = "/{userId}/addRole", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDto addRole(@PathVariable("userId") Long userId, @RequestParam RoleCode code) {
+        Long adminId = AuthUtils.getCurrentUser().getId();
+        log.info("Request to add new role ({}) to user with ID ({}) from admin with ID ({})", code.getLabel(), userId, adminId);
+        return userService.addRole(userId, code);
+    }
+
+    @Operation(description = "Remove role from user", security = @SecurityRequirement(name = "jwt"))
+    @PatchMapping(value = "/{userId}/removeRole", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDto removeRole(@PathVariable("userId") Long userId, @RequestParam RoleCode code) {
+        Long adminId = AuthUtils.getCurrentUser().getId();
+        log.info("Request to remove role ({}) from user with ID ({}) from admin with ID ({})", code.getLabel(), userId, adminId);
+        return userService.removeRole(userId, code);
     }
 }

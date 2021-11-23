@@ -3,6 +3,7 @@ package com.praisesystem.backend.users.services;
 import com.praisesystem.backend.users.dto.request.UserFilter;
 import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.model.UserEntity;
+import com.praisesystem.backend.users.roles.enums.RoleCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,5 +28,7 @@ public interface UserService {
 
     Page<UserDto> findByAddressOrDiscordTagOrTelegramHandle(String pattern, Pageable pageable);
 
-    UserDto addToQuantPool(Long userId);
+    UserDto addRole(Long userId, RoleCode code);
+
+    UserDto removeRole(Long userId, RoleCode code);
 }
