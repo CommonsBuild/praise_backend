@@ -1,19 +1,16 @@
 package com.praisesystem.backend.quantification;
 
+import com.praisesystem.backend.users.dto.response.UserDto;
 import lombok.Value;
 
 @Value
 public class QuantifiedPraiseDto {
 
     Long periodId;
-    String periodName;
 
     Long praiseId;
 
-    String giverName;
-    String recipientName;
-
-    String quantifierName;
+    UserDto quantifier;
 
     Long score;
 }

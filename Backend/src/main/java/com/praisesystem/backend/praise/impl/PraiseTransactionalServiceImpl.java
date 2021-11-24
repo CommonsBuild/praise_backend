@@ -7,10 +7,12 @@ import com.praisesystem.backend.periods.enums.PeriodStatus;
 import com.praisesystem.backend.periods.model.Period;
 import com.praisesystem.backend.praise.dto.CreatePraiseDto;
 import com.praisesystem.backend.praise.dto.PraiseDto;
+import com.praisesystem.backend.praise.dto.PraiseFilter;
 import com.praisesystem.backend.praise.mapper.PraiseMapper;
 import com.praisesystem.backend.praise.model.Praise;
 import com.praisesystem.backend.praise.repository.PraisePeriodRepository;
 import com.praisesystem.backend.praise.repository.PraiseRepository;
+import com.praisesystem.backend.praise.repository.specifications.PraiseFilterSpecification;
 import com.praisesystem.backend.praise.services.PraiseTransactionalService;
 import com.praisesystem.backend.source.model.Source;
 import com.praisesystem.backend.source.services.SourceService;
@@ -18,6 +20,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,12 +44,17 @@ public class PraiseTransactionalServiceImpl implements PraiseTransactionalServic
     AccountService accountService;
     SourceService sourceService;
 
+    @Override
+    public Page<PraiseDto> findAllByFilter(PraiseFilter filter, Pageable pageable) {
+        Specification<Praise> specification = new PraiseFilterSpecification(filter);
+        return praiseRepository.findAll(specification, pageable).map(praiseMapper::toPraiseDto);
+    }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
-    public Praise findById(Long id) {
+    public PraiseDto findById(Long id) {
         Praise praise = praiseRepository.findById(id).orElseThrow(() -> new NotFoundObjectException("Praise not found"));
-        return praise;
+        return praiseMapper.toPraiseDto(praise);
     }
 
     @Override

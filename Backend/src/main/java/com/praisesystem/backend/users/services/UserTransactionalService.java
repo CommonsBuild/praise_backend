@@ -1,5 +1,7 @@
 package com.praisesystem.backend.users.services;
 
+import com.praisesystem.backend.users.dto.request.UserLimitedFilter;
+import com.praisesystem.backend.users.dto.response.UserLimitedDto;
 import com.praisesystem.backend.users.dto.request.UserFilter;
 import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.model.UserEntity;
@@ -16,6 +18,8 @@ public interface UserTransactionalService {
 
     Page<UserDto> findAll(UserFilter filter, Pageable pageable);
 
+    Page<UserLimitedDto> findAllLimited(UserLimitedFilter filter, Pageable pageable);
+
     UserDto findById(Long id);
 
     UserDto findByEthereumAddress(String ethereumAddress);
@@ -26,11 +30,12 @@ public interface UserTransactionalService {
 
     Set<UserEntity> findRandomUsers(Long requiredCount);
 
-    UserEntity findUserEntityById(Long id);
-
     Page<UserDto> findByAddressOrDiscordTagOrTelegramHandle(String pattern, Pageable pageable);
 
     UserDto addRole(Long userId, RoleCode code);
 
     UserDto removeRole(Long userId, RoleCode code);
+
+    UserLimitedDto findLimitedUserInfoById(Long userId);
+
 }

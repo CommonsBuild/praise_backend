@@ -3,12 +3,15 @@ package com.praisesystem.backend.users.impl;
 import com.praisesystem.backend.common.exceptions.exceptiontypes.NotFoundObjectException;
 import com.praisesystem.backend.common.exceptions.exceptiontypes.ValidationException;
 import com.praisesystem.backend.configuration.properties.ApplicationProperties;
+import com.praisesystem.backend.users.dto.request.UserLimitedFilter;
+import com.praisesystem.backend.users.dto.response.UserLimitedDto;
 import com.praisesystem.backend.users.dto.request.UserFilter;
 import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.mapper.UserMapper;
 import com.praisesystem.backend.users.model.UserEntity;
 import com.praisesystem.backend.users.repositories.UserRepository;
 import com.praisesystem.backend.users.repositories.specifications.UserFilterSpecification;
+import com.praisesystem.backend.users.repositories.specifications.UserLimitedFilterSpecification;
 import com.praisesystem.backend.users.repositories.specifications.UserSearchForAddingQuantifierSpecification;
 import com.praisesystem.backend.users.roles.RoleService;
 import com.praisesystem.backend.users.roles.enums.RoleCode;
@@ -109,11 +112,6 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
     }
 
     @Override
-    public UserEntity findUserEntityById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundObjectException("User not found"));
-    }
-
-    @Override
     public Page<UserDto> findByAddressOrDiscordTagOrTelegramHandle(String pattern, Pageable pageable) {
         Specification<UserEntity> specification = new UserSearchForAddingQuantifierSpecification(pattern);
         return userRepository.findAll(specification, pageable).map(userMapper::toUserDto);
@@ -146,8 +144,20 @@ public class UserTransactionalServiceImpl implements UserTransactionalService {
     }
 
     @Override
+    public UserLimitedDto findLimitedUserInfoById(Long userId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new NotFoundObjectException("User not found"));
+        return userMapper.toLimitedUserDto(user);
+    }
+
+    @Override
     public Page<UserDto> findAll(UserFilter filter, Pageable pageable) {
         Specification<UserEntity> specification = new UserFilterSpecification(filter);
         return userRepository.findAll(specification, pageable).map(userMapper::toUserDto);
+    }
+
+    @Override
+    public Page<UserLimitedDto> findAllLimited(UserLimitedFilter filter, Pageable pageable) {
+        Specification<UserEntity> specification = new UserLimitedFilterSpecification(filter);
+        return userRepository.findAll(specification, pageable).map(userMapper::toLimitedUserDto);
     }
 }

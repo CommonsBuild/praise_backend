@@ -33,7 +33,8 @@ public class UserAdminController {
     @GetMapping(value ="/allByFilter", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<UserDto> findAll(
             @ParameterObject UserFilter filter,
-            @ParameterObject Pageable pageable) {
+            @ParameterObject Pageable pageable
+    ) {
         return userService.findAll(filter, pageable);
     }
 
@@ -42,14 +43,15 @@ public class UserAdminController {
     public Page<UserDto> findByAddressOrDiscordTagOrTelegramHandle(
             @Parameter(description = "Search pattern")
             @RequestParam("pattern") String pattern,
-            @ParameterObject Pageable pageable) {
+            @ParameterObject Pageable pageable
+    ) {
         return userService.findByAddressOrDiscordTagOrTelegramHandle(pattern, pageable);
     }
 
     @Operation(description = "Find user by ID", security = @SecurityRequirement(name = "jwt"))
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDto findById(@PathVariable("id") Long id) {
-        return userService.findUserDtoById(id);
+        return userService.findUserInfoById(id);
     }
 
     @Operation(description = "Add role to user", security = @SecurityRequirement(name = "jwt"))

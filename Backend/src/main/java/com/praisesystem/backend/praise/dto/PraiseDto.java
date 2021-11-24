@@ -1,6 +1,7 @@
 package com.praisesystem.backend.praise.dto;
 
 import com.praisesystem.backend.accounts.dto.AccountDto;
+import com.praisesystem.backend.quantification.QuantifiedPraiseDto;
 import com.praisesystem.backend.source.dto.SourceDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Value;
@@ -16,7 +17,7 @@ public class PraiseDto {
     Long periodId;
 
     @Schema(description = "Quantified praise IDs")
-    Set<Long> quantifiedPraises;
+    Set<QuantifiedPraiseDto> quantifiedPraises;
 
     @Schema(description = "Praise reason")
     String reason;

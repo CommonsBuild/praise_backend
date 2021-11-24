@@ -1,6 +1,7 @@
 package com.praisesystem.backend.users.mapper;
 
 import com.praisesystem.backend.accounts.mapper.AccountMapper;
+import com.praisesystem.backend.users.dto.response.UserLimitedDto;
 import com.praisesystem.backend.users.roles.mapper.RoleMapper;
 import com.praisesystem.backend.users.roles.mapper.support.RolesToStringList;
 import com.praisesystem.backend.users.roles.model.RoleEntity;
@@ -34,4 +35,10 @@ public interface UserMapper {
         user.updateNonce();
         return user;
     }
+
+    @Mapping(target = "roles", source = "roles", qualifiedBy = RolesToStringList.class)
+    UserLimitedDto toLimitedUserDto(UserEntity user);
+
+    List<UserLimitedDto> toUserLimitedDtos(List<UserEntity> userEntities);
+
 }

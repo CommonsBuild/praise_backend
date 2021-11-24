@@ -1,5 +1,7 @@
 package com.praisesystem.backend.users.impl;
 
+import com.praisesystem.backend.users.dto.request.UserLimitedFilter;
+import com.praisesystem.backend.users.dto.response.UserLimitedDto;
 import com.praisesystem.backend.users.dto.request.UserFilter;
 import com.praisesystem.backend.users.dto.response.UserDto;
 import com.praisesystem.backend.users.model.UserEntity;
@@ -30,6 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Page<UserLimitedDto> findAllLimited(UserLimitedFilter filter, Pageable pageable) {
+        return userTransactionalService.findAllLimited(filter, pageable);
+    }
+
+    @Override
     public Long countUsers() {
         return userTransactionalService.countUsers();
     }
@@ -40,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findUserDtoById(Long id) {
+    public UserDto findUserInfoById(Long id) {
         return userTransactionalService.findById(id);
     }
 
@@ -60,11 +67,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity findUserEntityById(Long id) {
-        return userTransactionalService.findUserEntityById(id);
-    }
-
-    @Override
     public Page<UserDto> findByAddressOrDiscordTagOrTelegramHandle(String pattern, Pageable pageable) {
         return userTransactionalService.findByAddressOrDiscordTagOrTelegramHandle(pattern, pageable);
     }
@@ -77,5 +79,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto removeRole(Long userId, RoleCode code) {
         return userTransactionalService.removeRole(userId, code);
+    }
+
+    @Override
+    public UserLimitedDto findLimitedUserInfoById(Long userId) {
+        return userTransactionalService.findLimitedUserInfoById(userId);
     }
 }
