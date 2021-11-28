@@ -9,7 +9,12 @@ Edit `/Backend/src/main/resources/application-local.yaml`
 `docker compose -f docker-compose-local.yml up`
 
 ### 3. Terminal 2, run backend
-`sudo ./gradlew bootRun --args='--spring.profiles.active=local'`
+`./gradlew bootRun --args='--spring.profiles.active=local'`
+
 
 - Backend runs at port 8088
 - Swagger API documentation at http://localhost:8088/swagger-ui.html
+
+
+## CI/CD
+./gradlew build -PspringProfiles=local
