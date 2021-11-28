@@ -1,1 +1,49 @@
+# --------------------------------------- COMMON PROPERTIES ---------------------------------------
+server:
+  port: ${PORT:8080}
 
+# --------------------------------------- SPRING PROPERTIES ---------------------------------------
+spring:
+  # ------------------------------------- DATASOURCE PROPERTIES -------------------------------------
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost/praise_db}
+    username: ${DATASOURCE_USER:postgres}
+    password: ${DATASOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+  cache:
+    cache-names:
+      - buckets
+    caffeine:
+      spec: maximumSize=1000000,expireAfterAccess=3600s
+# ------------------------------------ PRAISESYSTEM PROPERTIES -------------------------------------
+praise-system:
+  admin-addresses: ${ADMIN_ADDRESSES}
+  frontend-url: ${FRONTEND_URL:http://localhost:3000}
+# ---------------------------------------- JWT PROPERTIES -----------------------------------------
+jwt:
+  token:
+    secret: ${JWT_TOKEN_SECRET:secret}
+    expirationTimeMS: ${JWT_EXPIRATION_TIME:2629800000}
+# ------------------------------------ SWAGGER PROPERTIES -----------------------------------------
+springdoc:
+  swagger-ui:
+    enabled: false
+# ------------------------------------ RATE-LIMIT PROPERTIES --------------------------------------
+bucket4j:
+  enabled: true
+  filters:
+    - cache-name: buckets
+      url: /*
+      rate-limits:
+        - bandwidths:
+            - capacity: 100
+              time: 1
+              unit: minutes
+              fixed-refill-interval: 1
+              fixed-refill-interval-unit: minutes
