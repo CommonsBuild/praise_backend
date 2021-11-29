@@ -1,16 +1,23 @@
 version: '3'
 
 services:
+  web:
+    container_name: praise_backend
+    build: Backend/
+    env_file:
+      - .env
+    ports: 
+      - 8088:8088
+
   db:
     container_name: praise_db
     image: postgres:13-alpine3.14
     restart: always
     ports:
       - 5432:5432
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: praise_db
       PGDATA: /var/lib/postgresql/data
     volumes:
       - db-data:/var/lib/postgresql/data
