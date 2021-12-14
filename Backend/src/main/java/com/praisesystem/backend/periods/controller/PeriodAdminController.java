@@ -28,14 +28,6 @@ public class PeriodAdminController {
 
     PeriodService periodService;
 
-    @Operation(description = "Find all periods", security = @SecurityRequirement(name = "jwt"))
-    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PeriodDto> findAll() {
-        Long adminId = AuthUtils.getCurrentUser().getId();
-        log.info("Request to search for the all periods from user with ID ({})", adminId);
-        return periodService.findAllPeriods();
-    }
-
     @Operation(description = "Find last period", security = @SecurityRequirement(name = "jwt"))
     @GetMapping(value = "/current", produces = MediaType.APPLICATION_JSON_VALUE)
     public PeriodDto findLastPeriod() {
